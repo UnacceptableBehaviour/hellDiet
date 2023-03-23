@@ -1,0 +1,363 @@
+/*    tag
+    . class
+    # id
+    TODO - this file - none of the css file appear to do anything! - unless conetnt is includedin html!!
+*/
+
+body {
+  margin: 0px;
+  background-color: #008100;
+  /*margin-top: 0px;*/
+  /*margin-bottom: 0px;*/
+}
+
+.paycheck-container {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: repeat(5, auto);
+  row-gap: 4px;         /* gap: for row-gap: & column-gap: */  
+}
+
+.paycheck-container .summary {
+  grid-row: 1 / span 5;
+}
+
+.paycheck-container .daily-hours {
+  grid-row: 6 / span 10;
+}
+
+.paycheck-container .week-totals {
+  grid-row: 16 / span 6;
+}
+
+.paycheck-container .totals {
+  grid-row: 22 / span 8;
+}
+
+/*.paycheck-container .debug {*/
+/*  grid-row: 30 / span 4;*/
+/*}*/
+
+
+.item {
+  padding: 4px;
+  background-color: #ECFFE0;  
+  border: 4px solid #8BC962;
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+
+/* BUTTON header areas */
+.lr-button {
+  padding: 0vh 2vw 0.2vh 2vw;   /*padding: top right bottom left;*/
+  height: 6vh;
+  /*border: 1px;*/
+  border-color: #444;
+}
+
+.lrbl {
+  border-radius: 5vw 0 0 5vw;
+}
+
+.lrbr {
+  border-radius: 0 5vw 5vw 0;
+}
+
+.lr-button > img {
+  height: 100%;   /* keep button in the middle */
+}
+
+.font-portrait {
+  font-size: 2.2vh;
+  /*padding-top: 5vh;*/
+  /*padding-bottom: 1vh;*/  
+}
+
+.title-text {
+  font-size: 3.5vh;
+  text-align: center;
+}
+
+#tax_code {
+  width: 18vw;
+}
+
+#wk_range {
+  text-align: right;
+  padding-right: 1vw;
+}
+#wk_range_dates_js {
+  padding-right: 1vw;
+}
+
+/* BUTTON flex boxes */
+/* flex  items left just - spacebox - item right just */
+/* DDD EEE - - - - - - - AAA BBB CCC*/
+.flexrow-button-header {
+  /*background-color: #F4FF23;*/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.flexrow-button-header-button {
+    /*text-align: center;*/
+}
+
+.flexrow-button-header-text {
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* WEEK summary section flex */
+/* flex  items left just - spacebox - item right just */
+/* DDD EEE - - - - - - - AAA BBB CCC*/
+.flexrow-container {
+    /*background-color: #F4FF23;*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.flexrow-middle-space {
+    /*height: 34px;*/
+    flex-grow: 1;
+}
+.flexrow-item {
+    text-align: center;
+}
+
+.time-font {
+  font-size: 3vh;
+  padding: 0.5vh 1vw;
+  padding-right: 6vw;
+  text-align: center;
+}
+.time-font > div {
+  padding: 0.5vw;
+}
+
+
+
+#mailto_d {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;  
+  padding: 0.1vh 4vw;
+  border: 0px;
+  margin: 0px;  
+}
+#mailto_d > img{
+  width: 10vw;
+}
+#mail_img {
+  padding-right: 2vw;
+}
+#debug_img {
+  border: 1px solid #444;
+  border-radius: 6px;
+}
+#help_img {
+  border: 1px solid #444;
+  border-radius: 6px;
+}
+#qr_but {
+  border: 1px solid #444;
+  border-radius: 6px;
+  align-content: center;
+  background-color: buttonface;
+  font-size: 5vw;
+  padding: 1.5vw;
+  margin-right: 2vw;
+}
+.btn-disable {
+  pointer-events: none;
+}
+
+.flash {
+  position: fixed;                
+  top: 50vh;
+  left: 50vw;
+  width: 80vw;
+  margin-left: -43vw;
+  height: 50vh;
+  margin-top: -40%;
+  border: 2px solid #444;
+  border-radius: 6px;
+  font-size: 2vh;
+  padding: 10px;  
+  opacity: 0%;
+  transition-property: opacity;
+  transition-duration: 250ms;
+}
+.flash-dbg {
+  background-color: #F0FF54;
+}
+.flash-qr {
+  background-color: #F6FCE8;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+.flash-qr > img {
+  width: 90%;
+  max-height: 90%;
+  margin: auto;
+  display: block;
+  object-fit: contain;
+}
+.flash-dbg-show{
+  opacity: 94%;
+}
+.flash-qr-show{
+  opacity: 100%;
+}
+
+
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* week day hours boxes */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+.week-day-font {
+  font-size: 2.1vh;
+}
+.hrs-row {
+  padding: 0vh 0vw;
+}
+
+.col1,
+.col2,
+.col3,
+.col4,
+.col5,
+.col6,
+.col7 {
+  width: 20vw;
+}
+
+.col1,
+.col2,
+.col6,
+.col7 {
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+.col3,
+.col4,
+.col5 {
+  contenteditable: true;
+  virtualkeyboardpolicy="manual";
+}
+
+.col1 {
+  text-align: left;
+  width: 5vw;
+  contenteditable: false;
+}
+.col2 {
+  text-align: left;
+  contenteditable: false;
+}
+.col3 {
+  text-align: center;
+}
+.col3 label {
+  
+}
+.col4 { /* BRK? */
+  text-align: left;
+}
+.hrs-head .col4{
+  text-align: center;
+}
+.col5 {
+  text-align: center;
+}
+/* cols 3,4,5 in, brk, out*/
+label.imgSelect, .col4 .break {
+  display: inline-block;
+  vertical-align: top;  
+  padding: 2px;
+  margin: 2px;  
+  width: 94%;
+  /*width: 20vw;*/
+  height: 2vh;
+  border: 2px solid #444;
+  border-radius: 3px;
+  background-color: #F7FFF2;
+}
+/* hides the 'Choose file' text box for camera inputs */
+label.imgSelect input[accept*="image"] {
+  display: none;
+}
+
+.col6 {
+  text-align: center;
+}
+.col7 {
+  text-align: center;
+}
+
+/* highLightTodaysEntry - highlight and fade out */
+:root {
+  --todays-entry-decay: 1250ms; 
+}
+.hrs-table .imgSelect {
+  transition-property: background-color;
+  transition-duration: var(--todays-entry-decay);
+}
+#date-today {
+  border-radius: 6px;
+  transition-property: background-color;
+  transition-duration: var(--todays-entry-decay);  
+}
+
+/* transition: none !important; << makes tha animation run on removal ONLY */
+.day-highlight {
+  background-color: #C60CFF !important;
+  transition: none !important;
+}
+
+
+.hr-row-test {
+  background-color: #6600FF;
+}
+
+.wk-row {
+  text-align: left;
+}
+.wk-row-hide {
+  display: none;
+}
+
+.space-box {
+  background-color: #FDFFF5;
+}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+
+#ct_week_totals td {
+  width: 18vw;
+}
+/* summary table */
+/* tbc - table column */
+.tbc.name {
+  width: 80vw;  
+}
+.tbc.fin_data {
+  width: 15vw;
+  text-align: right;
+}
+
+#ct_debug {
+  disply: none;
+}
+
+
+

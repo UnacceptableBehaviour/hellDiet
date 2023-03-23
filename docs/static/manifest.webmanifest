@@ -1,0 +1,39 @@
+{
+  "name": "payCheck",
+  "id": "/paycheck/",
+  "short_name": "payCheck",
+  "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results.",
+  "icons": [
+    {
+      "src": "assets/app_icons/payCheckIcon.svg",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/app_icons/payCheckIcon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/app_icons/payCheckIcon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }    
+  ],
+  "screenshots" : [
+    {
+      "src": "assets/images/screenshot.png",
+      "sizes": "320x512",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "Home screen"
+    }
+  ],  
+  "theme_color": "#008100",
+  "background_color": "#008100",
+  "scope": "/paycheck/",
+  "start_url": "/paycheck/index.html",
+  "display": "standalone",
+  "orientation": "portrait" 
+}
