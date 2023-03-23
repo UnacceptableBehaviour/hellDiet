@@ -3,38 +3,42 @@
     # id
     TODO - this file - none of the css file appear to do anything! - unless conetnt is includedin html!!
 */
+.color-palette {
+  border-color: #084d96;
+  background-color: #66b0ff;
+}
 
 body {
   margin: 0px;
-  background-color: #008100;
+  background-color: #084d96;
   /*margin-top: 0px;*/
   /*margin-bottom: 0px;*/
 }
 
-.paycheck-container {
+.hellDiet-container {
   display: grid;
   height: 100vh;
   grid-template-rows: repeat(5, auto);
   row-gap: 4px;         /* gap: for row-gap: & column-gap: */  
 }
 
-.paycheck-container .summary {
+.hellDiet-container .summary {
   grid-row: 1 / span 5;
 }
 
-.paycheck-container .daily-hours {
+.hellDiet-container .daily-hours {
   grid-row: 6 / span 10;
 }
 
-.paycheck-container .week-totals {
+.hellDiet-container .week-totals {
   grid-row: 16 / span 6;
 }
 
-.paycheck-container .totals {
+.hellDiet-container .totals {
   grid-row: 22 / span 8;
 }
 
-/*.paycheck-container .debug {*/
+/*.hellDiet-container .debug {*/
 /*  grid-row: 30 / span 4;*/
 /*}*/
 

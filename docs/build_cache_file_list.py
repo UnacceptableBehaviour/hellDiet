@@ -1,6 +1,14 @@
 #! /usr/bin/env python
 
-# print 
+# cd into hellDiet/docs
+# run build_cache_file_list.py
+# it will generate the FILES_TO_CACHE array / list
+# copy paste it into SW
+
+# if the local server is runing it will check if all files are present
+# cd hellDiet/
+# run http-server -c-1
+# re-run build_cache_file_list.py
 
 from pathlib import Path
 from pprint import pprint
@@ -8,8 +16,8 @@ import requests
 import sys
 
 user_name = 'unacceptablebehaviour'
-repo_name = 'paycheck' # >--------------------------------------\
-project_root = Path('/Users/simon/a_syllabus/lang/html_css_js/paycheck/docs')
+repo_name = 'hellDiet' # >--------------------------------------\
+project_root = Path('/Users/simon/a_syllabus/lang/html_css_js/hellDiet/docs')
 
 dev_root = f"http://127.0.0.1:8080/{repo_name}/"
 web_root = f"https://{user_name}.github.io/{repo_name}/"

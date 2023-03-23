@@ -1,8 +1,8 @@
 {
-  "name": "payCheck",
-  "id": "/paycheck/",
-  "short_name": "payCheck",
-  "description": "Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results.",
+  "name": "hellDiet",
+  "id": "/hellDiet/",
+  "short_name": "hellDiet",
+  "description": "Reminder of fodd regimen for strict 14day diet. Usually lose a stone (14lb/~6kg) if you stick to it!",
   "icons": [
     {
       "src": "assets/app_icons/payCheckIcon.svg",
@@ -30,10 +30,10 @@
       "label": "Home screen"
     }
   ],  
-  "theme_color": "#008100",
-  "background_color": "#008100",
-  "scope": "/paycheck/",
-  "start_url": "/paycheck/index.html",
+  "theme_color": "#084d96",
+  "background_color": "#084d96",
+  "scope": "/hellDiet/",
+  "start_url": "/hellDiet/index.html",
   "display": "standalone",
   "orientation": "portrait" 
 }

@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
   <title>Pay Calulator</title>
-  <!--<link rel="canonical" href="https://unacceptablebehaviour.github.io/paycheck/" />-->   <!--google web crawl-->
-  <link rel="stylesheet" type="text/css" href="static/paycheck.css" />
+  <!--<link rel="canonical" href="https://unacceptablebehaviour.github.io/hellDiet/" />-->   <!--google web crawl-->
+  <link rel="stylesheet" type="text/css" href="static/hellDiet.css" />
   <link rel="manifest" href="static/manifest.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Single page PWA - Calculate work hours, tax NI, pension etc for the month. Share results."> <!--script should update this fomr manifest-->
@@ -14,8 +14,8 @@
   <link rel="apple-touch-icon" href="static/assets/app_icons/apple-touch-icon.png">  
   <link rel="icon" href="static/assets/app_icons/payCheckIcon.svg " type="image/svg+xml">
 
-  <meta name="apple-mobile-web-app-title" content="payCheck">
-  <meta name="application-name" content="payCheck">
+  <meta name="apple-mobile-web-app-title" content="hellDiet">
+  <meta name="application-name" content="hellDiet">
   <meta name="msapplication-TileColor" content="#008100">
   <meta name="msapplication-config" content="static/assets/app_icons/browserconfig.xml">
   <meta name="theme-color" content="#008100">
@@ -26,7 +26,7 @@
   <script>
     if ('serviceWorker' in navigator) {            
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/paycheck/service_worker.js', {scope: '/paycheck/'})
+        navigator.serviceWorker.register('/hellDiet/service_worker.js', {scope: '/hellDiet/'})
             .then((reg) => {
               console.log('SW registered - scope:', reg.scope); // reg.scope: http://localhost:50999/                    
               console.log('Service worker registered.', reg);              
@@ -39,7 +39,7 @@
 </head>
 
 <body style="font-family:'Arial';">
-  <div class="paycheck-container font-portrait">
+  <div class="hellDiet-container font-portrait">
     <div id='ct_paycycle_summary' class='item summary'>
       <div class='flexrow-button-header' id='pay_day'>
         <span class='flexrow-button-header-text title-text' id='pay_day_js'>js_calc</span>              
@@ -381,7 +381,7 @@
 
   </div>
   <script type="module" src='static/focus.js'></script>
-  <script type="module" src='static/paycheck.js'></script>  
+  <script type="module" src='static/hellDiet.js'></script>  
 </body>
 </html>
 

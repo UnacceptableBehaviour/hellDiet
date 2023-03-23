@@ -9,49 +9,49 @@
 // for github.io?
 // https://gist.github.com/kosamari/7c5d1e8449b2fbc97d372675f16b566e
 // depends if you are using /docs/  or /master/
-// /paycheck/
+// /hellDiet/
 
-const KEY_SW_INFO = 'sw_info';   // must match in paycheck.js!
+const KEY_SW_INFO = 'sw_info';   // must match in hellDiet.js!
 
-let verion_number_passed_in = '00.29';  // < - - - - - - - - - - - - - - - - - - - - - - //
+let verion_number_passed_in = '00.01';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
-const CACHE_NAME = `paycheck-gitio-cache_${verion_number_passed_in}`;                     //
+const CACHE_NAME = `hellDiet-gitio-cache_${verion_number_passed_in}`;                     //
                                                                                           //
 // * * * * * * * * * * * * * * * * * * * * * * * * * * *                                  //
 // run                                                                                    //
-// build_cache_file_list.py from /paycheck/docs                                           //
+// build_cache_file_list.py from /hellDiet/docs                                           //
 // to create updated list                                                                 //
 // * * * * * * * * * * * * * * * * * * * * * * * * * * *                                  //
 // DONT cache SW - changes to SW force an update of SW, and consequently caches - UPDATE VERSION ABOVE
-//'/paycheck/service_worker.js',  // https://stackoverflow.com/questions/55027512/should-i-cache-the-serviceworker-file-in-a-pwa
+//'/hellDiet/service_worker.js',  // https://stackoverflow.com/questions/55027512/should-i-cache-the-serviceworker-file-in-a-pwa
 const FILES_TO_CACHE = [
   '/',
-  '/paycheck/',
-  '/paycheck/favicon.ico',
-  '/paycheck/index.html',
-  '/paycheck/apple-touch-icon.png',
-  '/paycheck/static/paycheck.css',
-  '/paycheck/static/paycheck.js',
-  '/paycheck/static/focus.js',
-  '/paycheck/static/manifest.webmanifest',
-  '/paycheck/static/assets/images/QR-code-w-icon-noShort.png',
-  '/paycheck/static/assets/images/screenshot.png',
-  '/paycheck/static/assets/app_icons/favicon.ico',
-  '/paycheck/static/assets/app_icons/payCheckIcon-192.png',
-  '/paycheck/static/assets/app_icons/apple-touch-icon.png',
-  '/paycheck/static/assets/app_icons/mstile-70x70.png',
-  '/paycheck/static/assets/app_icons/payCheckIcon-512.png',
-  '/paycheck/static/assets/app_icons/payCheckIcon.svg',
-  '/paycheck/static/assets/app_icons/mstile-150x150.png',
-  '/paycheck/static/assets/app_icons/browserconfig.xml',
-  '/paycheck/static/assets/icons/hol-right.png',
-  '/paycheck/static/assets/icons/debug.svg',
-  '/paycheck/static/assets/icons/email-svgrepo-com.png',
-  '/paycheck/static/assets/icons/hol-left.svg',
-  '/paycheck/static/assets/icons/hol-left.png',
-  '/paycheck/static/assets/icons/email-svgrepo-com.svg',
-  '/paycheck/static/assets/icons/debug.png',
-  '/paycheck/static/assets/icons/hol-right.svg'
+  '/hellDiet/',
+  '/hellDiet/favicon.ico',
+  '/hellDiet/index.html',
+  '/hellDiet/apple-touch-icon.png',
+  '/hellDiet/static/focus.js',
+  '/hellDiet/static/hellDiet.js',
+  '/hellDiet/static/manifest.webmanifest',
+  '/hellDiet/static/hellDiet.css',
+  '/hellDiet/static/assets/images/QR-code-w-icon-noShort.png',
+  '/hellDiet/static/assets/images/screenshot.png',
+  '/hellDiet/static/assets/app_icons/favicon.ico',
+  '/hellDiet/static/assets/app_icons/payCheckIcon-192.png',
+  '/hellDiet/static/assets/app_icons/apple-touch-icon.png',
+  '/hellDiet/static/assets/app_icons/mstile-70x70.png',
+  '/hellDiet/static/assets/app_icons/payCheckIcon-512.png',
+  '/hellDiet/static/assets/app_icons/payCheckIcon.svg',
+  '/hellDiet/static/assets/app_icons/mstile-150x150.png',
+  '/hellDiet/static/assets/app_icons/browserconfig.xml',
+  '/hellDiet/static/assets/icons/hol-right.png',
+  '/hellDiet/static/assets/icons/debug.svg',
+  '/hellDiet/static/assets/icons/email-svgrepo-com.png',
+  '/hellDiet/static/assets/icons/hol-left.svg',
+  '/hellDiet/static/assets/icons/hol-left.png',
+  '/hellDiet/static/assets/icons/email-svgrepo-com.svg',
+  '/hellDiet/static/assets/icons/debug.png',
+  '/hellDiet/static/assets/icons/hol-right.svg',
 ];
 
 console.log(`service_worker.js V:${CACHE_NAME}`);
@@ -97,6 +97,7 @@ self.addEventListener('activate', (evt) => {
   //});  
   self.clients.claim();
 });
+
 
 
 // fetch event - service network requests 

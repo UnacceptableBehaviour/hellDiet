@@ -566,7 +566,7 @@ class PayCycle4wk{
     textSummary += document.querySelector('#r7_net_t').textContent.padEnd(PAD_TOTS_DEDS_TITLE)         +this.netIncomeForCycle.toFixed(2).padStart(PAD_TOTS_DEDS_VAL)+'\n';
     
     textSummary += '\n\n';
-    textSummary += `Sent on ${new Date()} by payCheck - MIT Lisence \nhttps://unacceptablebehaviour.github.io/paycheck/ \n\n`;
+    textSummary += `Sent on ${new Date()} by hellDiet - MIT Lisence \nhttps://unacceptablebehaviour.github.io/hellDiet/ \n\n`;
     
     cl(textSummary);
 
@@ -610,7 +610,7 @@ function addDebugLine(text) {
 function debugInfo(args) {
   let debugText = "* * * DEBUG INFO (beta release) * * * ";
   debugText += addDebugLine('');
-  debugText += addDebugLine(`paycheck.js V00.07 / SW 00.29`); // verion_number_passed_in
+  debugText += addDebugLine(`hellDiet V00.01 / SW 00.01`); // verion_number_passed_in
   debugText += addDebugLine('');
   
   // based on
