@@ -1,19 +1,30 @@
 {\rtf1\ansi\ansicpg1252\cocoartf2513
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
-{\colortbl;\red255\green255\blue255;\red251\green0\blue7;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c1989\c0;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww17640\viewh14280\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;\f2\fnil\fcharset0 HelveticaNeue;
+\f3\fnil\fcharset0 HelveticaNeue-Light;}
+{\colortbl;\red255\green255\blue255;\red251\green0\blue7;\red0\green0\blue0;\red0\green0\blue0;
+\red45\green43\blue46;\red0\green0\blue0;\red142\green55\blue14;\red66\green0\blue134;\red189\green0\blue140;
+\red118\green115\blue119;\red37\green127\blue159;\red146\green0\blue23;\red180\green36\blue25;\red202\green202\blue202;
+\red23\green23\blue23;\red109\green109\blue109;\red70\green137\blue204;\red140\green211\blue254;\red194\green126\blue101;
+\red109\green109\blue109;\red23\green23\blue23;\red70\green137\blue204;\red202\green202\blue202;\red140\green211\blue254;
+\red194\green126\blue101;}
+{\*\expandedcolortbl;;\cssrgb\c100000\c1989\c0;\csgray\c0;\cssrgb\c0\c0\c0;
+\cssrgb\c23137\c22353\c23922;\cssrgb\c0\c0\c0\c5882;\cssrgb\c63137\c28627\c5882;\cssrgb\c33333\c0\c59608;\cssrgb\c79608\c0\c61961;
+\cssrgb\c53725\c52549\c54118;\cssrgb\c16863\c56863\c68627;\cssrgb\c64706\c0\c11765;\cssrgb\c76409\c21698\c12524;\cssrgb\c83137\c83137\c83137;
+\cssrgb\c11765\c11765\c11765;\cssrgb\c50196\c50196\c50196;\cssrgb\c33725\c61176\c83922;\cssrgb\c61176\c86275\c99608;\cssrgb\c80784\c56863\c47059;
+\cssrgb\c50196\c50196\c50196;\cssrgb\c11765\c11765\c11765;\cssrgb\c33725\c61176\c83922;\cssrgb\c83137\c83137\c83137;\cssrgb\c61176\c86275\c99608;
+\cssrgb\c80784\c56863\c47059;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww20140\viewh14280\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf0 # paycheck\
-Single page PWA to add up hours, and work out tax and NI contributions to compare to payroll.\
-See app here: https://unacceptablebehaviour.github.io/paycheck/\
+\f0\fs24 \cf0 # hellDiet\
+Small PWA to remind me of good recipes for the hellDiet.\
+See app here: https://unacceptablebehaviour.github.io/hellDiet/\
 \
 ## Contents  \
 \
   \
 ## AIM:  \
-PWA appshell  \
+PWA first spin off from appshell - mini app.  \
   \
 ## Directory structure & main files  \
 ```\
@@ -404,5 +415,168 @@ Check favicon with the [favicon checker](https://realfavicongenerator.net/favico
   \
 **Run lighthouse:**\
 Manifest has NO maskable icon.\
+\
+\
+\
+\
+
+\f1\b ## Actions to port shell to new mini app - hellDiet: (use to generecise)
+\f0\b0 \
+\
+Create repo.  \
+  \
+Copy over:  \
+	.gitignore, docs, install_createTOC.sh, LICENSE.md, README.rtf  \
+\
+Run install_createTOC.sh  \
+\
+Create Link / Alias to docs with name of repo [
+\fs22 \cf3 \CocoaLigature0 ln -s docs hellDiet
+\fs24 \cf0 \CocoaLigature1 ](enable running local dev version)  \
+  \
+Edit .gitignore replace symlink repo name with new repo name  \
+  \
+github > repo_name > settings > pages >\
+  Source > deploy from branch\
+  Branch > main > docs > save\
+\
+\
+Rename paycheck.js, paycheck.css to hellDiet versions, change all refs(4) in code.\
+\
+Reset service_worker.js cache version number\
+\
+Edit docs: Search and replace paycheck with hellDiet\
+  index.html\
+  service_worker.js\
+  manifest.webmanifest\
+  build_cache_file_list.py\
+\
+Create ICON 512x512 SVG & PNG \
+  Save as hD.svg\
+  Export as hD.png\
+  Edited manifest so only these two are present\
+  Export png 180x180 as apple-touch-icon.png\
+  Export png 192x192 as hD-192.png\
+  favicon.ico - Open hD.svg in Gimp set size 32x32. Export file to\'a0favicon.ico\'a0using\'a032 bpp, 8-bit alpha, no palette\'a0settings\
+\
+\
+To fulfill [from {\field{\*\fldinst{HYPERLINK "https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs"}}{\fldrslt evil martians}} https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs]:\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardeftab720\partightenfactor0
+
+\f2\fs30 \cf4 \expnd0\expndtw0\kerning0
+  \
+For the browser using HTML:\
+```\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardeftab720\sl440\partightenfactor0
+
+\fs25 \cf5 \cb6 <\cf7 link \cf8 rel\cf5 ="\cf9 icon\cf5 "\cf7  \cf8 href\cf5 ="\cf9 /favicon.ico\cf5 "\cf7  \cf8 sizes\cf5 ="\cf9 any\cf5 ">
+\f3 \cf10 <!-- 32\'d732 -->
+\f2 \cf4 \
+\cf5 <\cf7 link \cf8 rel\cf5 ="\cf9 icon\cf5 "\cf7  \cf8 href\cf5 ="\cf9 /hd.svg\cf5 "\cf7  \cf8 type\cf5 ="\cf9 image/svg+xml\cf5 ">\cf4 \
+\cf5 <\cf7 link \cf8 rel\cf5 ="\cf9 apple-touch-icon\cf5 "\cf7  \cf8 href\cf5 ="\cf9 /apple-touch-icon.png\cf5 ">
+\f3 \cf10 <!-- 180\'d7180 -->
+\f2 \cf4 \
+\cf5 <\cf7 link \cf8 rel\cf5 ="\cf9 manifest\cf5 "\cf7  \cf8 href\cf5 ="\cf9 /manifest.webmanifest\cf5 ">\cf4 \
+```\
+  
+\fs30 \cb1 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardeftab720\partightenfactor0
+\cf4 And in your web app manifest:\
+```\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardeftab720\sl440\partightenfactor0
+
+\f3\fs25 \cf10 \cb6 // manifest.webmanifest
+\f2 \cf4 \
+\cf5 \{\cf4 \
+  \cf11 "icons"\cf5 :\cf4  \cf5 [\cf4 \
+    \cf5 \{\cf4  \cf11 "src"\cf5 :\cf4  \cf12 "/hD-192.png"\cf5 ,\cf4  \cf11 "type"\cf5 :\cf4  \cf12 "image/png"\cf5 ,\cf4  \cf11 "sizes"\cf5 :\cf4  \cf12 "192x192"\cf4  \cf5 \},\cf4 \
+    \cf5 \{\cf4  \cf11 "src"\cf5 :\cf4  \cf12 "/hD.png"\cf5 ,\cf4  \cf11 "type"\cf5 :\cf4  \cf12 "image/png"\cf5 ,\cf4  \cf11 "sizes"\cf5 :\cf4  \cf12 "512x512"\cf4  \cf5 \}\cf4 \
+  \cf5 ]\cf4 \
+\cf5 \}\cf4 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+Check Icon againsst back grounds with /hellDiet/icon/openToCheckPng.html\
+\
+Update manifest & reset background colours.\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardirnatural\partightenfactor0
+\cf0 QR code image (& button) URL:{\field{\*\fldinst{HYPERLINK "https://unacceptablebehaviour.github.io/hellDiet/"}}{\fldrslt https://unacceptablebehaviour.github.io/hellDiet/}}\
+	{\field{\*\fldinst{HYPERLINK "https://tinyurl.com/app"}}{\fldrslt TinuURL}}	[https://tinyurl.com/app]	https://tinyurl.com/cnsv77y8	{\field{\*\fldinst{HYPERLINK "file:///Users/simon/a_syllabus/lang/html_css_js/hellDiet/scratch/QR/tinyurl.com-hellDiet.png"}}{\fldrslt Also creates QR Code}}\
+	Code Monkey\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+What about? - No longer required! IE legacy remove\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardirnatural\partightenfactor0
+
+\fs22 \cf13 \CocoaLigature0 docs/static/assets/app_icons/browserconfig.xml\cf3 \
+\cf13 docs/static/assets/app_icons/mstile-150x150.png\cf3 \
+\cf13 docs/static/assets/app_icons/mstile-70x70.png
+\fs24 \cf0 \CocoaLigature1 \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardirnatural\partightenfactor0
+\cf0 Are these still required?\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardeftab720\sl360\partightenfactor0
+\cf14 \cb15 \expnd0\expndtw0\kerning0
+  \cf16 <\cf17 meta\cf14  \cf18 name\cf14 =\cf19 "msapplication-TileColor"\cf14  \cf18 content\cf14 =\cf19 "#225993"\cf16 >\cf0 \cb1 \kerning1\expnd0\expndtw0 		IE10 Win8 - So NO	\cf14 \expnd0\expndtw0\kerning0
+\
+\cb15   \cf16 <\cf17 meta\cf14  \cf18 name\cf14 =\cf19 "theme-color"\cf14  \cf18 content\cf14 =\cf19 "#225993"\cf16 >\cf0 \cb1 \kerning1\expnd0\expndtw0 				Specified in meanifest NOT needed\
+\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardirnatural\partightenfactor0
+\cf0 \
+						fill@ #008100 filling in pC?\
+payCheckIcon.svg - specify media test with /hellDiet/icon/openToCheckPng.html\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardeftab720\sl360\partightenfactor0
+\cf20 \cb21 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec20 <\cf22 \strokec22 svg\cf23 \strokec23  \cf24 \strokec24 xmlns\cf23 \strokec23 =\cf25 \strokec25 "http://www.w3.org/2000/svg"\cf23 \strokec23  \cf24 \strokec24 width\cf23 \strokec23 =\cf25 \strokec25 "512"\cf23 \strokec23  \cf24 \strokec24 height\cf23 \strokec23 =\cf25 \strokec25 "512"\cf23 \strokec23  \cf24 \strokec24 viewBox\cf23 \strokec23 =\cf25 \strokec25 "0 0 135.467 135.467"\cf23 \strokec23  \cf24 \strokec24 version\cf23 \strokec23 =\cf25 \strokec25 "1.1"\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "svg8"\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21   \cf20 \strokec20 <\cf22 \strokec22 style\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21     .ltr \{\cb1 \
+\cb21       fill: #fff\cb1 \
+\cb21     \}\cb1 \
+\
+\cb21     @media (prefers-color-scheme:dark) \{\cb1 \
+\cb21       .ltr \{\cb1 \
+\cb21         fill: #008100\cb1 \
+\cb21       \}\cb1 \
+\cb21     \}\cb1 \
+\cb21   \cf20 \strokec20 </\cf22 \strokec22 style\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21   \cf20 \strokec20 <\cf22 \strokec22 g\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "layer1"\cf23 \strokec23  \cf24 \strokec24 style\cf23 \strokec23 =\cf25 \strokec25 "display:inline"\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21     \cf20 \strokec20 <\cf22 \strokec22 path\cf23 \strokec23  \cf24 \strokec24 style\cf23 \strokec23 =\cf25 \strokec25 "fill:#fff;stroke-width:.264583"\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "rect130-5"\cf23 \strokec23  \cf24 \strokec24 d\cf23 \strokec23 =\cf25 \strokec25 "M94.872 139.473h13.607v17.387H94.872z"\cf23 \strokec23  \cf20 \strokec20 />\cf23 \cb1 \strokec23 \
+\cb21     \cf20 \strokec20 <\cf22 \strokec22 path\cf23 \strokec23  \cf24 \strokec24 style\cf23 \strokec23 =\cf25 \strokec25 "fill-opacity:1;stroke-width:.264583;fill:#008100"\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "rect22"\cf23 \strokec23  \cf24 \strokec24 d\cf23 \strokec23 =\cf25 \strokec25 "M-.378-.378h136.071v136.827H-.378z"\cf23 \strokec23  \cf20 \strokec20 />\cf23 \cb1 \strokec23 \
+\cb21   \cf20 \strokec20 </\cf22 \strokec22 g\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21   \cf20 \strokec20 <\cf22 \strokec22 g\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "layer3"\cf23 \strokec23  \cf24 \strokec24 style\cf23 \strokec23 =\cf25 \strokec25 "display:inline"\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21     \cf20 \strokec20 <\cf22 \strokec22 g\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "g31"\cf23 \strokec23  \cf24 \strokec24 transform\cf23 \strokec23 =\cf25 \strokec25 "translate(2.268)"\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21       \cf20 \strokec20 <\cf22 \strokec22 text\cf23 \strokec23  \cf24 \strokec24 xml:space\cf23 \strokec23 =\cf25 \strokec25 "preserve"\cf23 \strokec23  \cf24 \strokec24 style\cf23 \strokec23 =\cf25 \strokec25 "font-size:77.7875px;line-height:1.25;font-family:'Andale Mono';-inkscape-font-specification:'Andale Mono';stroke-width:.810895"\cf23 \strokec23  \cf24 \strokec24 x\cf23 \strokec23 =\cf25 \strokec25 "14.701"\cf23 \strokec23  \cf24 \strokec24 y\cf23 \strokec23 =\cf25 \strokec25 "85.148"\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "text60"\cf23 \strokec23  \cf24 \strokec24 transform\cf23 \strokec23 =\cf25 \strokec25 "scale(.9764 1.02417)"\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21         \cf20 \strokec20 <\cf22 \strokec22 tspan\cf23 \strokec23  \cf24 \strokec24 class\cf23 \strokec23 =\cf25 \strokec25 "ltr"\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "tspan58"\cf23 \strokec23  \cf24 \strokec24 x\cf23 \strokec23 =\cf25 \strokec25 "14.701"\cf23 \strokec23  \cf24 \strokec24 y\cf23 \strokec23 =\cf25 \strokec25 "85.148"\cf23 \strokec23  \cf24 \strokec24 style\cf23 \strokec23 =\cf25 \strokec25 "font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-size:77.7875px;font-family:Futura;-inkscape-font-specification:'Futura Bold';stroke-width:.810895"\cf20 \strokec20 >\cf23 \strokec23 p\cf20 \strokec20 </\cf22 \strokec22 tspan\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21       \cf20 \strokec20 </\cf22 \strokec22 text\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21       \cf20 \strokec20 <\cf22 \strokec22 text\cf23 \strokec23  \cf24 \strokec24 xml:space\cf23 \strokec23 =\cf25 \strokec25 "preserve"\cf23 \strokec23  \cf24 \strokec24 style\cf23 \strokec23 =\cf25 \strokec25 "font-size:77.7875px;line-height:1.25;font-family:'Andale Mono';-inkscape-font-specification:'Andale Mono';stroke-width:.810895"\cf23 \strokec23  \cf24 \strokec24 x\cf23 \strokec23 =\cf25 \strokec25 "66.374"\cf23 \strokec23  \cf24 \strokec24 y\cf23 \strokec23 =\cf25 \strokec25 "92.548"\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "text60-9"\cf23 \strokec23  \cf24 \strokec24 transform\cf23 \strokec23 =\cf25 \strokec25 "scale(.9764 1.02417)"\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21         \cf20 \strokec20 <\cf22 \strokec22 tspan\cf23 \strokec23  \cf24 \strokec24 class\cf23 \strokec23 =\cf25 \strokec25 "ltr"\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "tspan58-2"\cf23 \strokec23  \cf24 \strokec24 x\cf23 \strokec23 =\cf25 \strokec25 "66.374"\cf23 \strokec23  \cf24 \strokec24 y\cf23 \strokec23 =\cf25 \strokec25 "92.548"\cf23 \strokec23  \cf24 \strokec24 style\cf23 \strokec23 =\cf25 \strokec25 "font-style:normal;font-variant:normal;font-weight:700;font-stretch:normal;font-size:77.7875px;font-family:Futura;-inkscape-font-specification:'Futura Bold';stroke-width:.810895"\cf20 \strokec20 >\cf23 \strokec23 C\cf20 \strokec20 </\cf22 \strokec22 tspan\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21       \cf20 \strokec20 </\cf22 \strokec22 text\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21       \cf20 \strokec20 <\cf22 \strokec22 path\cf23 \strokec23  \cf24 \strokec24 class\cf23 \strokec23 =\cf25 \strokec25 "ltr"\cf23 \strokec23  \cf24 \strokec24 style\cf23 \strokec23 =\cf25 \strokec25 "stroke-width:.264583"\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "rect130-1"\cf23 \strokec23  \cf24 \strokec24 d\cf23 \strokec23 =\cf25 \strokec25 "M89.58 23.813h13.607V41.2H89.58z"\cf23 \strokec23  \cf20 \strokec20 />\cf23 \cb1 \strokec23 \
+\cb21       \cf20 \strokec20 <\cf22 \strokec22 path\cf23 \strokec23  \cf24 \strokec24 class\cf23 \strokec23 =\cf25 \strokec25 "ltr"\cf23 \strokec23  \cf24 \strokec24 style\cf23 \strokec23 =\cf25 \strokec25 "stroke-width:.264583"\cf23 \strokec23  \cf24 \strokec24 id\cf23 \strokec23 =\cf25 \strokec25 "rect130-3"\cf23 \strokec23  \cf24 \strokec24 d\cf23 \strokec23 =\cf25 \strokec25 "M89.543 90.06h13.607v17.387H89.543z"\cf23 \strokec23  \cf20 \strokec20 />\cf23 \cb1 \strokec23 \
+\cb21     \cf20 \strokec20 </\cf22 \strokec22 g\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cb21   \cf20 \strokec20 </\cf22 \strokec22 g\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\cf20 \cb21 \strokec20 </\cf22 \strokec22 svg\cf20 \strokec20 >\cf23 \cb1 \strokec23 \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardirnatural\partightenfactor0
+\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardeftab720\sl360\partightenfactor0
+\cf23 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec23 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardirnatural\partightenfactor0
+\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\
+\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\tx7976\tx9147\tx10207\tx11381\tx12490\tx13622\tx14778\tx15909\tx17067\tx18145\tx19304\pardirnatural\partightenfactor0
+
+\f1\b\fs28 \cf0 TODO 
+\f0\b0\fs24 \
+\
+Screen shot\
+\
 \
 }

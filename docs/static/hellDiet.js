@@ -379,7 +379,7 @@ class PayCycle4wk{
     document.querySelector('#date-today-year').textContent = today.year;
     
     // HEADER - update pay_day, cut_off, wk_range = week no's, wk_range_dates 4week date range
-    document.querySelector('#pay_day_js').textContent = `Pay Day: ${this.payDay.getDate()} ${Day.numToMonth[this.payDay.getMonth()]}`;
+    document.querySelector('#pay_day_js').textContent = `Day: ${this.payDay.getDate()} ${Day.numToMonth[this.payDay.getMonth()]}`;
     document.querySelector('#wk_range_js').textContent = ` ${this.getWeekNo(0)} - ${this.getWeekNo(3)}`;
     document.querySelector('#wk_range_dates_js').textContent = `${this.payStart.getDate()} ${Day.numToMonth[this.payStart.getMonth()]} - ${this.cutOff.getDate()} ${Day.numToMonth[this.cutOff.getMonth()]}`;
     document.querySelector('#wk_no_js').textContent = this.getWeekNoDateRange();
@@ -835,7 +835,7 @@ window.addEventListener('load',function(){
   if (document.querySelector('#qr_but')) {
     document.querySelector('#qr_but').addEventListener('click', function(event){  
       //displayFlash(event, id, classSpecific, classShow, innerHTML='')
-      let img = '<img src="static/assets/images/QR-code-w-icon-noShort.png">';
+      let img = '<img src="static/assets/images/hellDiet-QR-short.png">';
       displayFlash(event, 'flash_QR', ['flash-qr'], 'flash-qr-show', img);
     });  
   }
@@ -864,14 +864,14 @@ if (hasGetUserMedia()) {
 // <input style='width:100%;' id="image_input" type="file" name="video" accept="image/*" > GALLERY
 //> console
 //document.getElementById("image_input").files[0];
-//File {  name: 'payCheckIconMain512x512.png', 
+//File {  name: 'hD.png', 
 //        lastModified: 1660913175719,
 //        lastModifiedDate: Fri Aug 19 2022 13:46:15 GMT+0100 (British Summer Time),
 //        webkitRelativePath: '',
 //        size: 20964, …}
 //        
 //document.getElementById("image_input").files[0].name;
-//'payCheckIconMain512x512.png'
+//'hD.png'
 //
 //document.getElementById("image_input").files[0].lastModified;
 //1660913175719

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="512"
+   height="512"
+   viewBox="0 0 135.46667 135.46667"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.2 (e86c8708, 2021-01-15)"
+   sodipodi:docname="hD-1.svg"
+   inkscape:export-filename="/Users/simon/a_syllabus/lang/html_css_js/hellDiet/icon/hd-1.png"
+   inkscape:export-xdpi="33.75"
+   inkscape:export-ydpi="33.75">
+  <defs
+     id="defs2">
+    <rect
+       x="-146.65477"
+       y="-15.875"
+       width="160.26191"
+       height="203.3512"
+       id="rect863" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98632812"
+     inkscape:cx="256"
+     inkscape:cy="254.66369"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer3"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     units="px"
+     width="512px"
+     inkscape:window-width="1252"
+     inkscape:window-height="755"
+     inkscape:window-x="12"
+     inkscape:window-y="508"
+     inkscape:window-maximized="0"
+     inkscape:pagecheckerboard="true" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-stretch:normal;font-size:92.6042px;line-height:1.25;font-family:Skia;-inkscape-font-specification:'Skia weight=101';stroke-width:0.264583"
+       x="11.339284"
+       y="99.785721"
+       id="text857"><tspan
+         sodipodi:role="line"
+         id="tspan855"
+         x="11.339284"
+         y="99.785721"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:92.6042px;font-family:Skia;-inkscape-font-specification:'Skia weight=101';stroke-width:0.264583" /><tspan
+         sodipodi:role="line"
+         x="11.339284"
+         y="215.54097"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:92.6042px;font-family:'Shree Devanagari 714';-inkscape-font-specification:'Shree Devanagari 714, ';stroke-width:0.264583"
+         id="tspan859" /></text>
+    <rect
+       style="fill:#1d7fd3;fill-opacity:1;stroke-width:0.264583"
+       id="rect960"
+       width="134.39366"
+       height="134.66191"
+       x="0.53650171"
+       y="0.53650171"
+       rx="11.90625"
+       ry="11.90625" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Layer 2"
+     style="opacity:0.995">
+    <text
+       xml:space="preserve"
+       style="font-size:92.60420000000000584px;line-height:1.25;font-family:'Andale Mono';-inkscape-font-specification:'Andale Mono';stroke-width:0.264583"
+       x="10.461781"
+       y="105.69083"
+       id="text980"><tspan
+         sodipodi:role="line"
+         id="tspan978"
+         x="10.461781"
+         y="105.69083"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Futura;-inkscape-font-specification:Futura;fill:#ffffff;stroke-width:0.264583">hD</tspan></text>
+  </g>
+</svg>

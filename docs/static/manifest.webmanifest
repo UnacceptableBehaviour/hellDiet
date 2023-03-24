@@ -2,24 +2,24 @@
   "name": "hellDiet",
   "id": "/hellDiet/",
   "short_name": "hellDiet",
-  "description": "Reminder of fodd regimen for strict 14day diet. Usually lose a stone (14lb/~6kg) if you stick to it!",
+  "description": "Reminder of food regimen for strict 14day diet. Usually lose a stone (14lb/~6kg) if you stick to it!",
   "icons": [
     {
-      "src": "assets/app_icons/payCheckIcon.svg",
+      "src": "assets/app_icons/hD.svg",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "assets/app_icons/payCheckIcon-192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "assets/app_icons/payCheckIcon-512.png",
+      "src": "assets/app_icons/hD.png",
       "type": "image/png",
       "sizes": "512x512"
-    }    
+    },    
+    {
+      "src": "assets/app_icons/hD-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
   ],
   "screenshots" : [
     {
@@ -30,8 +30,8 @@
       "label": "Home screen"
     }
   ],  
-  "theme_color": "#084d96",
-  "background_color": "#084d96",
+  "theme_color": "#225993",
+  "background_color": "#225993",
   "scope": "/hellDiet/",
   "start_url": "/hellDiet/index.html",
   "display": "standalone",

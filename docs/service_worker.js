@@ -34,7 +34,7 @@ const FILES_TO_CACHE = [
   '/hellDiet/static/hellDiet.js',
   '/hellDiet/static/manifest.webmanifest',
   '/hellDiet/static/hellDiet.css',
-  '/hellDiet/static/assets/images/QR-code-w-icon-noShort.png',
+  '/hellDiet/static/assets/images/hellDiet-QR-short.png',
   '/hellDiet/static/assets/images/screenshot.png',
   '/hellDiet/static/assets/app_icons/favicon.ico',
   '/hellDiet/static/assets/app_icons/payCheckIcon-192.png',
