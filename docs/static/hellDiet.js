@@ -49,13 +49,9 @@ class Day{
   constructor(date){
     //this.date = date;
     this.day = Day.numToDay[date.getDay()];     // Mon
+    this.day_no = date.getDay();                // 1
     //this.HRdate = `${date.getDate()}\u00A0${Day.numToMonth[date.getMonth()]}`;  // 25&nbspAug - 25 Aug
     this.HRdate = `${date.getDate().toString().padStart(2, '0')}${Day.numToMonth[date.getMonth()]}`;  // 25Aug - better for print / email format
-    this.inTime = '';         // 0728
-    this.breakTime = '30';    // 30     break time in mins
-    this.outTime = '';        // 1553
-    this.totalMins = 0;       // integer
-    this.totalALMins = 0;     // integer
     this.year = date.getFullYear();
   }
   
@@ -63,85 +59,15 @@ class Day{
     //cl('initFromJSON-DAY() - - - - - - - - S');
     this.day =  jsonObj.day;
     this.HRdate = jsonObj.HRdate;
-    this.inTime = jsonObj.inTime;
-    this.breakTime = jsonObj.breakTime;
-    this.outTime = jsonObj.outTime;
-    this.totalMins = jsonObj.totalMins;
-    this.totalALMins = jsonObj.totalALMins;
-    if (this.totalALMins === undefined) this.totalALMins = 0;
-    this.totalMinsReadableHM  = jsonObj.totalMinsReadableHM;
-    this.totalMinsDecimalHM = jsonObj.totalMinsDecimalHM;
-    //cl(`initJSON-DAY(): ${this.day}-${this.HRdate}:${this.inTime}-${this.breakTime}-${this.outTime}`);
+    this.year = jsonObj.year
     //cl('initFromJSON-DAY() - - - - - - - - E');
-  }
-  
-  setHours(start, breakStr, finish){
-    this.inTime = start;        // 0728
-    this.breakTime = breakStr;  // 30     break time in mins / or  AL anual leave
-    this.outTime = finish;      // 1553
-    //cl(`in: ${start} break: ${breakStr} out: ${finish}`);
-    if (this.breakTime === 'AL') { // Anual Leave - 7hr day
-      this.inTime = '0700';
-      this.outTime = '1400';
-      this.totalMins = 0;
-      this.totalALMins = 7 * 60;
-      this.totalMinsReadableHM = '7H00';
-      this.totalMinsDecimalHM = '7.00';
-
-    } else {
-      if ((start === '') || (finish === '')) {
-        this.totalMins = 0;
-        return;
-      }
-  
-      // finish time to mins
-      let hrsF = parseInt(finish.substr(0,2));
-      let minF = parseInt(finish.substr(2,4));
-      let toEnd = hrsF*60 + parseInt(minF);
-      //cl(`finish: ${finish} -: ${toEnd} - hrs: ${hrsF} - mins:${minF} - hrs ${finish.slice(0,2)}`);
-      
-      // start time to mins inc 15m roundup
-      let hrsS = parseInt(start.substr(0,2));
-      let minS = parseInt(start.substr(2,4));
-      
-      //let roundupMins = minS + (15 - (minS % 15));                  // round up to the next nearest 15min 0701 = 0715 walmart sneakiness
-      let roundupMins = minS? (minS-1) + (15 - ((minS-1) % 15)) : 0;  // round to nearest 15m  0=0, 1-15=15, 16-30=30, 31-45=45, 46-59=60
-      let fromStart = hrsS*60 + roundupMins;
-      
-      //cl(`start: ${start} -: ${fromStart} - hrs: ${hrsS} - mins:${minS} - rnd:${roundupMins} - hrs ${start.slice(0,2)}`);
-      
-      // mins to hhHmm 7H53
-      // mins to decimal HRS 7.88Hrs
-      let breakMins = parseInt(this.breakTime);
-      let totalMins;
-      if (toEnd <= (fromStart + breakMins)) {
-        const ONE_DAY = 24*60;
-        totalMins = (ONE_DAY - fromStart) + toEnd - breakMins;      
-      } else {
-        totalMins = toEnd - fromStart - breakMins;
-      }
-      
-      this.totalMins = totalMins;
-      this.totalMinsReadableHM = `${Math.floor(this.totalMins / 60)}H${(this.totalMins % 60).toString().padStart(2, '0')}`;
-      this.totalMinsDecimalHM = `${(Math.floor(this.totalMins / 60) + ((this.totalMins % 60) / 60)).toFixed(2)}`;      
-    }  
-  }
-  
-  clearHours(){
-    this.inTime = '';
-    this.breakTime = '30';
-    this.outTime = '';
-    this.totalMins = 0;
-    this.totalALMins = 0;
-    this.totalMinsReadableHM = '';
-    this.totalMinsDecimalHM = '';
   }
   
 }
 
 
 
-class PayCycle4wk{
+class LifeExtend15{
   static DAYS_IN_CYCLE = 15;
   static prefixes = ['sun','mon','tue','wed','thu','fri','sat'];
   static postfixes = ['_date_js','_in','_break','_out','_hrs','_dhrs','',''];
@@ -173,21 +99,28 @@ class PayCycle4wk{
     }    
   }
   
-  constructor(payDay, startWkNo){ // let pc = new PayCycle4wk(new Date(2022, 07, 12)); // the month is 0-indexed
+  constructor(startDate=null){ // let hd = new LifeExtend15(new Date(2022, 07, 12)); // the month is 0-indexed
+    this.today = new Day(new Date());
+    this.today = new Day(startDate);
+    this.currentDay = 0;
+  }
 
+  getUpdateCrntDay(){
+    this.today = new Day(new Date());
+    return this.today.day;
   }
   
   initFromJSON(jsonObj){ // let dt = new Date("2022-08-06T03:00:00.000Z")
     //cl('initFromJSON() - - - - - - - - S');
-    this.payDay           = new Date(jsonObj.payDay);   //cl(jsonObj.payDay']);  
-    this.cutOff           = new Date(jsonObj.cutOff);   //cl(jsonObj.cutOff']);
-    this.payStart         = new Date(jsonObj.payStart); //cl(jsonObj.payStart']);
-    this.weekNo           = jsonObj.weekNo;             //cl(jsonObj.weekNo']);
-    this.weekNos          = jsonObj.weekNos;            //cl(jsonObj.weekNos']);
-    this.localStorageKey  = jsonObj.localStorageKey;    //cl(jsonObj.localStorageKey']);    
-    for (let dayNo = 0; dayNo < PayCycle4wk.DAYS_IN_CYCLE; dayNo +=1) {
-      this.daysInCycle[dayNo].initFromJSON(jsonObj.daysInCycle[dayNo]);
-    }
+    // this.payDay           = new Date(jsonObj.payDay);   //cl(jsonObj.payDay']);  
+    // this.cutOff           = new Date(jsonObj.cutOff);   //cl(jsonObj.cutOff']);
+    // this.payStart         = new Date(jsonObj.payStart); //cl(jsonObj.payStart']);
+    // this.weekNo           = jsonObj.weekNo;             //cl(jsonObj.weekNo']);
+    // this.weekNos          = jsonObj.weekNos;            //cl(jsonObj.weekNos']);
+    // this.localStorageKey  = jsonObj.localStorageKey;    //cl(jsonObj.localStorageKey']);    
+    // for (let dayNo = 0; dayNo < LifeExtend15.DAYS_IN_CYCLE; dayNo +=1) {
+    //   this.daysInCycle[dayNo].initFromJSON(jsonObj.daysInCycle[dayNo]);
+    // }
     //cl(`initFromJSON-4WK(): ${this.payDay}-${this.localStorageKey}:${this.weekNos}`);
     //cl('initFromJSON() - - - - - - - - E');
   }
@@ -204,16 +137,12 @@ class PayCycle4wk{
   updateHTML(){
     // TODAYS DATE
     let todayClockElement;
-    let today = new Day(new Date());
-    document.querySelector('#date-today-day').textContent = today.day;
-    document.querySelector('#date-today-date').textContent = today.HRdate;
-    document.querySelector('#date-today-year').textContent = today.year;
+    
+    document.querySelector('#date-today-day').textContent = this.today.day;
+    document.querySelector('#date-today-date').textContent = this.today.HRdate;
+    document.querySelector('#date-today-year').textContent = this.today.year;
     
 
-  }
-
-  emailVersionSummary(emailFormat=FORMAT_EMAIL){ 
-    // feels like a rehash of updateHTML - maybe a smarter way to do both?
   }
 
 }
@@ -223,61 +152,70 @@ class PayCycle4wk{
 // - - - - - - - - - - - - - - - - - - - - - - - - APP START- - - - - - - - - - - - - - - = = = <
 
 
-var pc = new PayCycle4wk(...PayCycle4wk.nextPayDayAfterToday());
+var hd = new LifeExtend15(new Date()); // check local storage and reconstitute if present.
 var stateKey = '';
-//cl(pc);
+//cl(hd);
 
 if (KEY_LAST_KNOWN_STATE in localStorage) {  // retrieve current statekey, and 4wk cycle object
   stateKey = localStorage.getItem(KEY_LAST_KNOWN_STATE);
   if (stateKey in localStorage) {
     let jsonObj = JSON.parse(localStorage.getItem(stateKey));
-    pc.initFromJSON(jsonObj);
-    cl(`LOADED PayCycle4wk object key: ${stateKey} < from localStrorage\n- KEYS Match: ${stateKey === pc.localStorageKey}`);  
+    hd.initFromJSON(jsonObj);
+    cl(`LOADED LifeExtend15 object key: ${stateKey} < from localStrorage\n- KEYS Match: ${stateKey === hd.localStorageKey}`);  
   }
 } else {
   // save a new state key
-  localStorage.setItem(KEY_LAST_KNOWN_STATE, pc.localStorageKey);
+  localStorage.setItem(KEY_LAST_KNOWN_STATE, hd.localStorageKey);
 }
 
-function addDebugLine(text) {
-  return `<br>${text}`;
-}
+// function addDebugLine(text) {
+//   return `<br>${text}`;
+// }
 
-function debugInfo(args) {
-  let debugText = "* * * DEBUG INFO (beta release) * * * ";
-  debugText += addDebugLine('');
-  debugText += addDebugLine(`hellDiet V00.01 / SW 00.01`); // verion_number_passed_in
-  debugText += addDebugLine('');
+// function debugInfo(args) {
+//   let debugText = "* * * DEBUG INFO (beta release) * * * ";
+//   debugText += addDebugLine('');
+//   debugText += addDebugLine(`hellDiet V00.01 / SW 00.01`); // verion_number_passed_in
+//   debugText += addDebugLine('');
   
-  // based on
-  debugText += addDebugLine(`Based on year: ${settings.taxYear}`);
-  debugText += addDebugLine('UK-ENGLAND');
-  debugText += addDebugLine('-');
-  debugText += addDebugLine('AL: Annual Leave');
-  debugText += addDebugLine('-');
-  debugText += addDebugLine(`TAX_RATE_2022/3: ${(settings.TAX_RATE_2022 * 100).toFixed(2)}%`);
-  debugText += addDebugLine(`TAX_2022_ALLOWANCE: £${settings.TAX_2022_ALLOWANCE}`);
-  debugText += addDebugLine(`NI_RATE_2022_23: ${(settings.NI_RATE_2022_23 * 100).toFixed(2)}%`);
-  debugText += addDebugLine(`NI_2022_23_ALLOWANCE: £${settings.NI_2022_23_ALLOWANCE}`);
-  debugText += addDebugLine(`HOURLY_RATE_2022: £${(settings.HOURLY_RATE_2022).toFixed(2)}`);
-  debugText += addDebugLine(`HOURLY_RATE_2022_AL: £${settings.HOURLY_RATE_AL_2022}`);
-  debugText += addDebugLine('(fixed:TODO update model)');
-  debugText += addDebugLine(`PENSION_PC: ${(settings.PENSION_PC * 100).toFixed(2)}%`);
-  debugText += addDebugLine('(fixed:TODO update model)');
-  debugText += addDebugLine('-');
+//   // based on
+//   debugText += addDebugLine(`Based on year: ${settings.taxYear}`);
+//   debugText += addDebugLine('UK-ENGLAND');
+//   debugText += addDebugLine('-');
+//   debugText += addDebugLine('AL: Annual Leave');
+//   debugText += addDebugLine('-');
+//   debugText += addDebugLine(`TAX_RATE_2022/3: ${(settings.TAX_RATE_2022 * 100).toFixed(2)}%`);
+//   debugText += addDebugLine(`TAX_2022_ALLOWANCE: £${settings.TAX_2022_ALLOWANCE}`);
+//   debugText += addDebugLine(`NI_RATE_2022_23: ${(settings.NI_RATE_2022_23 * 100).toFixed(2)}%`);
+//   debugText += addDebugLine(`NI_2022_23_ALLOWANCE: £${settings.NI_2022_23_ALLOWANCE}`);
+//   debugText += addDebugLine(`HOURLY_RATE_2022: £${(settings.HOURLY_RATE_2022).toFixed(2)}`);
+//   debugText += addDebugLine(`HOURLY_RATE_2022_AL: £${settings.HOURLY_RATE_AL_2022}`);
+//   debugText += addDebugLine('(fixed:TODO update model)');
+//   debugText += addDebugLine(`PENSION_hd: ${(settings.PENSION_hd * 100).toFixed(2)}%`);
+//   debugText += addDebugLine('(fixed:TODO update model)');
+//   debugText += addDebugLine('-');
   
-  if (KEY_SW_INFO in localStorage) {
-    swInfo = localStorage.getItem(KEY_SW_INFO);
+//   if (KEY_SW_INFO in localStorage) {
+//     swInfo = localStorage.getItem(KEY_SW_INFO);
     
-    debugText += addDebugLine(`SW version: ${swInfo.swVersion}`);
-    debugText += addDebugLine(`cache: ${swInfo.cacheName}`);
-  } else {
-    debugText += addDebugLine('** WARNING **');
-    debugText += addDebugLine(`KEY: ${KEY_SW_INFO} < Not found.`);
-  }
+//     debugText += addDebugLine(`SW version: ${swInfo.swVersion}`);
+//     debugText += addDebugLine(`cache: ${swInfo.cacheName}`);
+//   } else {
+//     debugText += addDebugLine('** WARNING **');
+//     debugText += addDebugLine(`KEY: ${KEY_SW_INFO} < Not found.`);
+//   }
   
-  return debugText;
-}
+//   return debugText;
+// }
+var theRules =`1. Don't drink any alcohol. (or your will power will fly out of the window!)
+2. Other drinks should not contain fat or sugar and minimal calories: tea, coffee, water, electrolyte drink.
+3. Don't use any fat in cooking.
+4. Remove any skin & fat from meats before cooking.
+5. A guidline for the amount of meat/fish to be prepared is 1g/lb of bodyweight.
+6. Eat what's assigned for the day NO freestyling! (unless it involves leaving things out)
+7. If you want to snack between meals snack on raw carrots, peppers or tomatoes.
+8. Dress salads w/ fat free & sugar free dressings. Avoid mayonaise and oil based vinaigrettes.
+9. Once you are full stop eating. Stop it! Put the fork down! Move away from the plate!`
 
 function displayFlash(event, id, classSpecific, classShow, innerHTML='') {
   cl(`> = = = POP FLASH ${id} = = = <`);
@@ -305,81 +243,109 @@ function displayFlash(event, id, classSpecific, classShow, innerHTML='') {
 
 window.addEventListener('load',function(){
   cl('LOADED - adding event listeners');
-  pc.updateWeekTotalMins();
-  pc.finalCalulations();  
-  pc.updateHTML();
-  cl(pc);
-  
-  // FORWARD & BACK BUTTONS WEEK & MONTH
-  // << WEEK
-  document.querySelector('#but_wk_no_bak').addEventListener('click', function(event){
-    pc.updateModelFromForms();    
-    pc.weekBak();
-    pc.updateHTML();
-    pc.persistentSave();    
-    //console.log(`Week BACK - WkNo: ${pc.getWeekNo()}`);      
-  });
-  
-  // WEEK >>
-  document.querySelector('#but_wk_no_fwd').addEventListener('click', function(event){
-    pc.updateModelFromForms();
-    pc.weekFwd();    
-    pc.updateHTML();
-    pc.persistentSave();    
-    //console.log(`Week FORWARD - WkNo: ${pc.getWeekNo()}`);
-  });
-  
-  // << 4WK
-  document.querySelector('#but_4wk_bak').addEventListener('click', function(event){
-    // cl('MOVE TO LAST 4WK CYCLE');
-    
-    pc.persistentSave();
-        
-    pc = new PayCycle4wk(...pc.getLastPayDay());  // create new payCycle object w/ LAST paydate & starting weekNo                                                  
+  hd.updateHTML();
+  cl(hd);
+
+    // << 4WK
+    document.querySelector('#but_4wk_bak').addEventListener('click', function(event){
+      // cl('MOVE TO LAST 4WK CYCLE');
       
-    if (pc.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
-      let jsonObj = JSON.parse(localStorage.getItem(pc.localStorageKey));
-      pc.initFromJSON(jsonObj);
-      cl(pc);          
-    }    
-    localStorage.setItem(KEY_LAST_KNOWN_STATE, pc.localStorageKey);
+      hd.persistentSave();
+          
+      hd = new LifeExtend15();  // create new payCycle object w/ LAST paydate & starting weekNo                                                  
+        
+      if (hd.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
+        let jsonObj = JSON.parse(localStorage.getItem(hd.localStorageKey));
+        hd.initFromJSON(jsonObj);
+        cl(hd);          
+      }    
+      localStorage.setItem(KEY_LAST_KNOWN_STATE, hd.localStorageKey);
+  
+      hd.updateHTML();
+    });
+    
+    // 4WK >>
+    document.querySelector('#but_4wk_fwd').addEventListener('click', function(event){
+      //cl('MOVE TO NEXT 4WK CYCLE');  
+  
+      hd.persistentSave();
+          
+      hd = new LifeExtend15();  // create new payCycle object w/ NEXT paydate & starting weekNo
+        
+      if (hd.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
+        let jsonObj = JSON.parse(localStorage.getItem(hd.localStorageKey));
+        hd.initFromJSON(jsonObj);
+        cl(hd);          
+      }
+      
+      localStorage.setItem(KEY_LAST_KNOWN_STATE, hd.localStorageKey);
+  
+      hd.updateHTML();
+  
+    });
 
-    pc.updateWeekTotalMins();
-    pc.finalCalulations();         
-    pc.updateHTML();
+  // DAY SLECT BUTTONS
+  document.querySelector('#sel_day_0').addEventListener('click', function(event){
+    hd.updateHTML();
+    hd.persistentSave();    
+    console.log(`sel_day_0: ${hd.getUpdateCrntDay()}`);      
   });
   
-  // 4WK >>
-  document.querySelector('#but_4wk_fwd').addEventListener('click', function(event){
-    //cl('MOVE TO NEXT 4WK CYCLE');  
-
-    pc.persistentSave();
-        
-    pc = new PayCycle4wk(...pc.getNextPayDay());  // create new payCycle object w/ NEXT paydate & starting weekNo
-      
-    if (pc.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
-      let jsonObj = JSON.parse(localStorage.getItem(pc.localStorageKey));
-      pc.initFromJSON(jsonObj);
-      cl(pc);          
-    }
-    
-    localStorage.setItem(KEY_LAST_KNOWN_STATE, pc.localStorageKey);
-
-    pc.updateWeekTotalMins();
-    pc.finalCalulations();          
-    pc.updateHTML();
-
+  document.querySelector('#sel_day_1').addEventListener('click', function(event){
+    hd.updateHTML();
+    hd.persistentSave();    
+    console.log(`sel_day_1: ${hd.getUpdateCrntDay()}`);      
   });
+  
+  document.querySelector('#sel_day_2').addEventListener('click', function(event){
+    hd.updateHTML();
+    hd.persistentSave();    
+    console.log(`sel_day_2: ${hd.getUpdateCrntDay()}`);      
+  });
+  
+  document.querySelector('#sel_day_3').addEventListener('click', function(event){
+    hd.updateHTML();
+    hd.persistentSave();    
+    console.log(`sel_day_3: ${hd.getUpdateCrntDay()}`);      
+  });
+  
+  document.querySelector('#sel_day_4').addEventListener('click', function(event){
+    hd.updateHTML();
+    hd.persistentSave();    
+    console.log(`sel_day_4: ${hd.getUpdateCrntDay()}`);      
+  });
+  
+  document.querySelector('#sel_day_5').addEventListener('click', function(event){
+    hd.updateHTML();
+    hd.persistentSave();    
+    console.log(`sel_day_5: ${hd.getUpdateCrntDay()}`);      
+  });
+  
+  document.querySelector('#sel_day_6').addEventListener('click', function(event){
+    hd.updateHTML();
+    hd.persistentSave();    
+    console.log(`sel_day_6: ${hd.getUpdateCrntDay()}`);      
+  });
+  
+  document.querySelector('#sel_day_99').addEventListener('click', function(event){
+    hd.updateHTML();
+    hd.persistentSave();    
+    console.log(`sel_day_99: ${hd.getUpdateCrntDay()}`);      
+  });
+  
+
+  
+
 
   // store data on lost focus
   registerLostFocusCallback(function(){
-    //cl(`LostFocus, storing:${pc.localStorageKey} - - - - - - S`);
-    pc.updateModelFromForms();
-    pc.persistentSave();
-    //cl(`LostFocus, stored:${pc.localStorageKey} - - - - - - E`);
+    //cl(`LostFocus, storing:${hd.localStorageKey} - - - - - - S`);
+    hd.updateModelFromForms();
+    hd.persistentSave();
+    //cl(`LostFocus, stored:${hd.localStorageKey} - - - - - - E`);
   });
   registerGainedFocusCallback(function(){
-    pc.updateHTML();
+    hd.updateHTML();
     //cl('GainedFocus.');
   });
 
@@ -413,9 +379,9 @@ window.addEventListener('load',function(){
       }
       
       event.target.parentElement.childNodes[1].textContent = fourDigitTime; // TODO choose span element instead of hardcode 1
-      pc.updateModelFromForms();
-      pc.persistentSave();
-      pc.updateHTML();
+      hd.updateModelFromForms();
+      hd.persistentSave();
+      hd.updateHTML();
       cl('TimeBox change - - - - - E');
     });
   });
@@ -424,9 +390,9 @@ window.addEventListener('load',function(){
     //cl('Add event listener for');
     //cl(item);
     item.addEventListener('change', event => {
-      pc.updateModelFromForms();
-      pc.persistentSave();
-      pc.updateHTML();          
+      hd.updateModelFromForms();
+      hd.persistentSave();
+      hd.updateHTML();          
     });
   });  
   
@@ -440,19 +406,12 @@ window.addEventListener('load',function(){
       cl(event.target.parentElement.id);
       
       let dayNo = parseInt(event.target.parentElement.id);      
-      pc.clearHours(dayNo);
-      pc.persistentSave();
-      pc.updateHTML();            
+      hd.clearHours(dayNo);
+      hd.persistentSave();
+      hd.updateHTML();            
     });
   });
 
-  // Mailing summary
-  document.querySelector('#mail_img').addEventListener('click', function(event){
-    //cl('> = = = MAIL SUMMARY= = = <');
-    let address = 'a.b@g.com';
-    let subject = 'payCheck Summary';  
-    window.location = `mailto:${address}?subject=${subject}&body=${pc.emailVersionSummary()}`;
-  });
   
   // Debug / HELP button
   // click to create minimised 
@@ -475,7 +434,17 @@ window.addEventListener('load',function(){
       displayFlash(event, 'flash_QR', ['flash-qr'], 'flash-qr-show', img);
     });  
   }
-  
+
+  if (document.querySelector('#rul_but')) {
+    document.querySelector('#rul_but').addEventListener('click', function(event){  
+      //displayFlash(event, id, classSpecific, classShow, innerHTML='')
+      let htmlRules = theRules.replace(/\n/g, '<br><br>');
+      cl(' - - - -  htmlRules - - - S');
+      cl(htmlRules);
+      cl(' - - - -  htmlRules - - - E');
+      displayFlash(event, 'flash_QR', ['flash-qr'], 'flash-qr-show', htmlRules);
+    });  
+  }
   
 });  // load END - - - - <
 
