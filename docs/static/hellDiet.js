@@ -34,7 +34,8 @@ Date.prototype.addDays = function(days) {
 //const date = payday;
 //const [month, dayOfMonth, day, year] = [date.getMonth(), date.getDate(), date.getDay(), date.getFullYear()];
 //const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
-class Day{
+//class Day extends Date {
+class Day {
   // for easy internationalisation use Intl.DateTimeFormat
   static numToDay = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   static numToMonth = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -47,9 +48,9 @@ class Day{
   }
   
   constructor(date){
-    //this.date = date;
+    if (!date) date = new Date();
     this.day = Day.numToDay[date.getDay()];     // Mon
-    this.day_no = date.getDay();                // 1
+    this.dayNo = date.getDay();                 // 1
     //this.HRdate = `${date.getDate()}\u00A0${Day.numToMonth[date.getMonth()]}`;  // 25&nbspAug - 25 Aug
     this.HRdate = `${date.getDate().toString().padStart(2, '0')}${Day.numToMonth[date.getMonth()]}`;  // 25Aug - better for print / email format
     this.year = date.getFullYear();
@@ -101,15 +102,30 @@ class LifeExtend15{
   
   constructor(startDate=null){ // let hd = new LifeExtend15(new Date(2022, 07, 12)); // the month is 0-indexed
     this.today = new Day(new Date());
-    this.today = new Day(startDate);
-    this.currentDay = 0;
+    this.startDate = new Day(startDate);
+    this.startDay = this.startDate.dayNo
+    this.progressDay = this.startDate.day;
+    this.progressNo = 0;
+    this.dayNo = this.startDate.dayNo;
   }
 
-  getUpdateCrntDay(){
-    this.today = new Day(new Date());
-    return this.today.day;
+  // nextDay(){
+  //   this.progressNo += 1;
+  //   let nextDay = new Date(this.startDate.date)
+  //   nextDay = nextDay.setDate(this.startDate.date + this.progressNo;
+  //   this.progressDay = nextDay.day; //addDays
+  //   this.dayNo = nextDay.dayNo;
+  //   cl(`DAY:${this.progressNo} = this.progressDay ${this.progressDay} - ${this.dayNo}`);
+  // }
+  prevDay(){ // debug
+
   }
-  
+
+  updateToday(){
+    this.today = new Day(new Date());
+    return this.today;
+  }
+
   initFromJSON(jsonObj){ // let dt = new Date("2022-08-06T03:00:00.000Z")
     //cl('initFromJSON() - - - - - - - - S');
     // this.payDay           = new Date(jsonObj.payDay);   //cl(jsonObj.payDay']);  
@@ -129,15 +145,16 @@ class LifeExtend15{
     localStorage.setItem(this.localStorageKey, JSON.stringify(this));
   }
   
-  // call on submit & week change  
+  // call on submit & week change & lose focus 
   updateModelFromForms(){
+    this.updateToday();
 
   }
   
   updateHTML(){
     // TODAYS DATE
     let todayClockElement;
-    
+    document.querySelector('#day_js').textContent = `${this.today.day} - ${this.progressNo}/${LifeExtend15.DAYS_IN_CYCLE}`;
     document.querySelector('#date-today-day').textContent = this.today.day;
     document.querySelector('#date-today-date').textContent = this.today.HRdate;
     document.querySelector('#date-today-year').textContent = this.today.year;
@@ -246,94 +263,77 @@ window.addEventListener('load',function(){
   hd.updateHTML();
   cl(hd);
 
-    // << 4WK
-    document.querySelector('#but_4wk_bak').addEventListener('click', function(event){
-      // cl('MOVE TO LAST 4WK CYCLE');
-      
-      hd.persistentSave();
-          
-      hd = new LifeExtend15();  // create new payCycle object w/ LAST paydate & starting weekNo                                                  
+  // << 4WK
+  document.querySelector('#but_4wk_bak').addEventListener('click', function(event){
+    cl(`DAY -= 1 now:${hd.progressDay} 00`);
+    hd.progressDay -= 1;
+    if (hd.progressDay < 0) hd.progressDay = 6;
+    cl(`${Day.numToDay[hd.progressDay]} - ${hd.progressDay}`)
+
+    // todayClockElement = document.querySelector(`#${LifeExtend15.prefixes[dayNo % 7]}_out`).parentElement;
+    // LifeExtend15.highLightTodaysEntry(todayClockElement);      
+    let flashDayElement = document.querySelector('#sel_day_1');
+    LifeExtend15.highLightTodaysEntry(flashDayElement);
+
+    hd.persistentSave();
         
-      if (hd.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
-        let jsonObj = JSON.parse(localStorage.getItem(hd.localStorageKey));
-        hd.initFromJSON(jsonObj);
-        cl(hd);          
-      }    
-      localStorage.setItem(KEY_LAST_KNOWN_STATE, hd.localStorageKey);
-  
-      hd.updateHTML();
-    });
+    //hd = new LifeExtend15();  // create new payCycle object w/ LAST paydate & starting weekNo                                                  
+      
+    if (hd.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
+      let jsonObj = JSON.parse(localStorage.getItem(hd.localStorageKey));
+      hd.initFromJSON(jsonObj);
+      cl(hd);          
+    }    
+    localStorage.setItem(KEY_LAST_KNOWN_STATE, hd.localStorageKey);
+
+    hd.updateHTML();
+  });
     
-    // 4WK >>
-    document.querySelector('#but_4wk_fwd').addEventListener('click', function(event){
-      //cl('MOVE TO NEXT 4WK CYCLE');  
-  
-      hd.persistentSave();
-          
-      hd = new LifeExtend15();  // create new payCycle object w/ NEXT paydate & starting weekNo
+  // 4WK >>
+  document.querySelector('#but_4wk_fwd').addEventListener('click', function(event){
+    cl(`DAY += 1 now:${hd.progressDay} 00`);
+    hd.progressDay += 1;
+    hd.progressDay = hd.progressDay % 7;
+    cl(`${Day.numToDay[hd.progressDay]} - ${hd.progressDay}`)
+
+    hd.nextDay();
+
+    hd.persistentSave();
         
-      if (hd.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
-        let jsonObj = JSON.parse(localStorage.getItem(hd.localStorageKey));
-        hd.initFromJSON(jsonObj);
-        cl(hd);          
-      }
+    //hd = new LifeExtend15();  // create new payCycle object w/ NEXT paydate & starting weekNo
       
-      localStorage.setItem(KEY_LAST_KNOWN_STATE, hd.localStorageKey);
-  
-      hd.updateHTML();
-  
-    });
+    if (hd.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
+      let jsonObj = JSON.parse(localStorage.getItem(hd.localStorageKey));
+      hd.initFromJSON(jsonObj);
+      cl(hd);          
+    }
+    
+    localStorage.setItem(KEY_LAST_KNOWN_STATE, hd.localStorageKey);
+
+    hd.updateHTML();
+
+  });
 
   // DAY SLECT BUTTONS
-  document.querySelector('#sel_day_0').addEventListener('click', function(event){
-    hd.updateHTML();
-    hd.persistentSave();    
-    console.log(`sel_day_0: ${hd.getUpdateCrntDay()}`);      
-  });
-  
-  document.querySelector('#sel_day_1').addEventListener('click', function(event){
-    hd.updateHTML();
-    hd.persistentSave();    
-    console.log(`sel_day_1: ${hd.getUpdateCrntDay()}`);      
-  });
-  
-  document.querySelector('#sel_day_2').addEventListener('click', function(event){
-    hd.updateHTML();
-    hd.persistentSave();    
-    console.log(`sel_day_2: ${hd.getUpdateCrntDay()}`);      
-  });
-  
-  document.querySelector('#sel_day_3').addEventListener('click', function(event){
-    hd.updateHTML();
-    hd.persistentSave();    
-    console.log(`sel_day_3: ${hd.getUpdateCrntDay()}`);      
-  });
-  
-  document.querySelector('#sel_day_4').addEventListener('click', function(event){
-    hd.updateHTML();
-    hd.persistentSave();    
-    console.log(`sel_day_4: ${hd.getUpdateCrntDay()}`);      
-  });
-  
-  document.querySelector('#sel_day_5').addEventListener('click', function(event){
-    hd.updateHTML();
-    hd.persistentSave();    
-    console.log(`sel_day_5: ${hd.getUpdateCrntDay()}`);      
-  });
-  
-  document.querySelector('#sel_day_6').addEventListener('click', function(event){
-    hd.updateHTML();
-    hd.persistentSave();    
-    console.log(`sel_day_6: ${hd.getUpdateCrntDay()}`);      
-  });
-  
-  document.querySelector('#sel_day_99').addEventListener('click', function(event){
-    hd.updateHTML();
-    hd.persistentSave();    
-    console.log(`sel_day_99: ${hd.getUpdateCrntDay()}`);      
-  });
-  
+  // REFACTOR INTO A LOOP
+  const ids = ['0', '1', '2', '3', '4', '5', '6', '99'];
 
+  ids.forEach(id => {
+    document.querySelector(`#sel_day_${id}`).addEventListener('click', function(event) {
+      hd.updateHTML();
+      hd.persistentSave();
+      console.log(`#sel_day_${id}: ${hd.updateToday().day}`);
+    });
+  });
+  
+  document.querySelector('#start_but').addEventListener('click', function(event) {
+    event.target.innerHTML = 'STOP';
+    hd.progressDay = hd.updateToday();
+    hd.progressNo = 0;
+    hd.updateHTML();
+    hd.persistentSave();
+    console.log(`START: ${hd.progressDay}: ${hd.updateToday().day}`);
+  });
   
 
 
