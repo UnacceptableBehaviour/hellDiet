@@ -36,94 +36,47 @@
 
 <body style="font-family:'Arial';">
   <div class="hellDiet-container font-portrait">
-    <div id='ct_paycycle_summary' class='item summary'>
-      <div class='flexrow-button-header' id='pay_day'>
-        <span class='flexrow-button-header-text title-text' id='pay_day_js'>js_calc</span>              
+    <div id='head_bar' class='item summary'>
+      <div id='head_bar_0' class='flexrow-button-header'>
+        <span class='title-text title-date-left' id='date-today-date'>29 Aug</span>
+        <span class='title-text title-date-left' id='date-today-year'>2050</span>        
+        <span id='day_js' class='flexrow-button-header-text title-text'>js_calc</span>                      
         <button id='but_4wk_bak' class='lr-button lrbl flexrow-button-header-button'><img src='static/assets/icons/hol-left.svg' alt='Back 4 weeks'></button>
         <button id='but_4wk_fwd' class='lr-button lrbr flexrow-button-header-button'><img src='static/assets/icons/hol-right.svg' alt='Forward 4 weeks'></button>
       </div>
-      <div class='flexrow-container day-selector'>
-        <div id='sel_day_1' class='day-but' alt='select Monday'   >MON</div>
-        <div id='sel_day_2' class='day-but' alt='select Tuesday'  >TUE</div>
-        <div id='sel_day_3' class='day-but' alt='select Wednesday'>WED</div>
-        <div id='sel_day_4' class='day-but' alt='select Thursday' >THU</div>
-        <div id='sel_day_5' class='day-but' alt='select Friday'   >FRI</div>
-        <div id='sel_day_6' class='day-but' alt='select Saturday' >SAT</div>
-        <div id='sel_day_7' class='day-but' alt='select Sunday'   >SUN</div>
+      <div id='head_bar_1' class='flexrow-container day-selector'>
+        <div id='sel-day-1' value='1' class='day-but' alt='select Monday'   >MON</div>
+        <div id='sel-day-2' value='2' class='day-but' alt='select Tuesday'  >TUE</div>
+        <div id='sel-day-3' value='3' class='day-but' alt='select Wednesday'>WED</div>
+        <div id='sel-day-4' value='4' class='day-but' alt='select Thursday' >THU</div>
+        <div id='sel-day-5' value='5' class='day-but' alt='select Friday'   >FRI</div>
+        <div id='sel-day-6' value='6' class='day-but' alt='select Saturday' >SAT</div>
+        <div id='sel-day-0' value='0' class='day-but' alt='select Sunday'   >SUN</div>        
       </div>
-
-    </div>
-    
-    <div id='ct_week_totals' class='item week-totals'>
-      <div class='flexrow-container'>
-        <div>      
-          <table>
-              <thead>
-                  <tr class='wk-row'>
-                      <th>Week</th>
-                      <th>Hrs</th>
-                      <th>DHrs</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr class='wk-row'><td id='r1_wk_no'>js_calc</td><td id='r1_tot_hrs'>js_calc</td><td id='r1_tot_dhrs'>js_calc</td></tr>
-                  <tr class='wk-row' id='al_wkr1' ><td id='r1h_wk_no'>js_calc</td><td id='r1h_tot_hrs'>js_calc</td><td id='r1h_tot_dhrs'>js_calc</td></tr>
-                  
-                  <tr class='wk-row'><td id='r2_wk_no'>js_calc</td><td id='r2_tot_hrs'>js_calc</td><td id='r2_tot_dhrs'>js_calc</td></tr>
-                  <tr class='wk-row' id='al_wkr2' ><td id='r2h_wk_no'>js_calc</td><td id='r2h_tot_hrs'>js_calc</td><td id='r2h_tot_dhrs'>js_calc</td></tr>
-                  
-                  <tr class='wk-row'><td id='r3_wk_no'>js_calc</td><td id='r3_tot_hrs'>js_calc</td><td id='r3_tot_dhrs'>js_calc</td></tr>
-                  <tr class='wk-row' id='al_wkr3' ><td id='r3h_wk_no'>js_calc</td><td id='r3h_tot_hrs'>js_calc</td><td id='r3h_tot_dhrs'>js_calc</td></tr>
-                  
-                  <tr class='wk-row'><td id='r4_wk_no'>js_calc</td><td id='r4_tot_hrs'>js_calc</td><td id='r4_tot_dhrs'>js_calc</td></tr>
-                  <tr class='wk-row' id='al_wkr4' ><td id='r4h_wk_no'>js_calc</td><td id='r4h_tot_hrs'>js_calc</td><td id='r4h_tot_dhrs'>js_calc</td></tr>
-              </tbody>
-              <tfoot>
-                  <tr class='wk-row'><td>Total</td><td id='r5_tot_hrs'>js_calc</td><td id='r5_tot_dhrs'>js_calc</td></tr>   
-              </tfoot>    
-          </table>
-        </div>
-        <span class='flexrow-middle-space space-box'></span>
-        <div>
-          <!--<div id='date-today' class='time-font'>-->
-          <div class='time-font'>
-            <div id='date-today'>
-              <div id='date-today-day'>Mon</div>
-              <div id='date-today-date'>29 Aug</div>
-              <div id='date-today-year'>2050</div>
-            </div>            
-          </div>          
-          <div id='mailto_d'>
-            <img id='mail_img' src='static/assets/icons/email-svgrepo-com.svg' alt='eMail 4week Summary'>
-            <div id='qr_but' alt='share with QR code'>QR</div> 
-            <img id='debug_img' src='static/assets/icons/debug.png' alt='debug Info button'>
-          </div>
-          
-        </div>
+      <div id='head_bar_2' class='flexrow-container day-selector'>
+        <div id='sel-day-99' class='day-but' alt='show ALL'           >ALL</div>
+        <div id='rul_but'    class='day-but' alt='show diet rules'    >RULES</div>
+        <div id='start_but'  class='day-but' alt='set start day'      >START</div>
+        <div id='debug_img'  class='day-but' alt='set start day'      >DBG</div>  
+        <!-- <div id='start_but'  class='day-but' alt='set start day'      >
+          <img id='debug_img'  class='day-but' alt='debug Info button'  src='static/assets/icons/debug.png'>
+        </div>           -->
+        <div id='qr_but'     class='day-but' alt='share with QR code' >QR</div> 
       </div>
-    </div>
-    
-    <div id='ct_dyX' class='item day'>
-      <div id='dyX_title' class='day-title'>CODE</div>
-      <div id='dyX_hhhh' class='day-time'>  
-        <div class='meal-title-l'>Lunch</div>
-        <div class='meal-content-l'>Old boots, all the fat trimmed off, no sauce, dry mf you hear me!</div>
-        <div class='meal-title-d'>Dinner</div>
-        <div class='meal-content-d'>Cracker, one cracker and a slice of cucumber will do you right!</div>
-      </div>
+      <!-- <div class='time-font'>
+        <div id='date-today'>
+          <div id='date-today-day'>Mon</div>
+          <div id='date-today-date'>29 Aug</div>
+          <div id='date-today-year'>2050</div>
+        </div>            
+      </div>   -->
     </div>
 
-
-    <div id='ct_dy6' class='item day'>
-      <div id='dyX_title' class='day-title'>SATURDAY</div>
-      <div id='dyX_hhhh' class='day-time'>  
-        <div class='meal-title-l'>Lunch</div>
-        <div class='meal-content-l'>As much fruit as much as you want. Any drink without sugar or fat of any kind.</div>
-        <div class='meal-title-d'>Dinner</div>
-        <div class='meal-content-d'>Roast poultry skin & fat removed after cooking. Tomatoes & lettuce prepared however you like without any fat or sugar. Fruit in season.</div>
-      </div>
-    </div>
-
+    <div id='ct-meal-txt'></div>
+    <div id='ct-recipes-l-t' class='item'>LUNCH RECIPES</div>
+    <div id='ct-recipes-l' class='item'></div>
+    <div id='ct-recipes-d-t' class='item'>DINNER RECIPES</div>
+    <div id='ct-recipes-d' class='item'></div>
     
   </div>
   <script type="module" src='static/focus.js'></script>

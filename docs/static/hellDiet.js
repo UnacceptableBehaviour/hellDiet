@@ -12,7 +12,6 @@ const KEY_SW_INFO          = 'sw_info';   // must match in SW!
 // settings & configuration
 const CAMERA_MODE_GALLERY = 0;
 const CAMERA_MODE_CAPTURE = 1;
-const HOURLY_RATE_2022 = 10.10;
 var settings = {
   cameraMode: CAMERA_MODE_GALLERY,
   showExceptions: true,                             // show hand authorized exception in mail breakdown 
@@ -35,6 +34,10 @@ Date.prototype.addDays = function(days) {
 //const [month, dayOfMonth, day, year] = [date.getMonth(), date.getDate(), date.getDay(), date.getFullYear()];
 //const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
 //class Day extends Date {
+
+
+// TODO inherit form Date - rmemeber Days was designed for paycheck a lot more diff func!
+
 class Day {
   // for easy internationalisation use Intl.DateTimeFormat
   static numToDay = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -70,26 +73,26 @@ class Day {
 
 class LifeExtend15{
   static DAYS_IN_CYCLE = 15;
-  static prefixes = ['sun','mon','tue','wed','thu','fri','sat'];
-  static postfixes = ['_date_js','_in','_break','_out','_hrs','_dhrs','',''];
+  static indexToDay = ['sun','mon','tue','wed','thu','fri','sat'];
   
-  static nextPayDayAfterToday(thisDate = new Date()) {
-    let refDate = new Date('2022-08-12T04:00:00');
-    let refWeekNo = 28;
-    let thisDayMsSinceEpoch = thisDate.getTime();
+  // TODO - re-use date maths or remove
+  // static nextPayDayAfterToday(thisDate = new Date()) {
+  //   let refDate = new Date('2022-08-12T04:00:00');
+  //   let refWeekNo = 28;
+  //   let thisDayMsSinceEpoch = thisDate.getTime();
     
-    for (let i=0; i<200; i+=1) {  // 13 steps = 1 year (52 / 4week cycle)
-      if (thisDayMsSinceEpoch < refDate.getTime()) return [refDate, refWeekNo];
-      refDate.addDays(28);
-      refWeekNo += 4;
-      if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
-      //cl(`nextPD: ${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
-    }
+  //   for (let i=0; i<200; i+=1) {  // 13 steps = 1 year (52 / 4week cycle)
+  //     if (thisDayMsSinceEpoch < refDate.getTime()) return [refDate, refWeekNo];
+  //     refDate.addDays(28);
+  //     refWeekNo += 4;
+  //     if (refWeekNo > 52) refWeekNo = refWeekNo - 52;
+  //     //cl(`nextPD: ${refWeekNo} - ${refDate.toISOString()} - ${refDate.getTime()} - ${refMsSinceEpoch}`);
+  //   }
     
-    // catch
-    refDate = new Date('2022-08-12T04:00:00'); refWeekNo = 28;
-    return [refDate, refWeekNo];
-  }
+  //   // catch
+  //   refDate = new Date('2022-08-12T04:00:00'); refWeekNo = 28;
+  //   return [refDate, refWeekNo];
+  // }
     
   static highLightTodaysEntry(element=undefined){
     if (element) {
@@ -103,10 +106,12 @@ class LifeExtend15{
   constructor(startDate=null){ // let hd = new LifeExtend15(new Date(2022, 07, 12)); // the month is 0-indexed
     this.today = new Day(new Date());
     this.startDate = new Day(startDate);
-    this.startDay = this.startDate.dayNo
+    this.startDay = this.startDate.dayNo;
     this.progressDay = this.startDate.day;
-    this.progressNo = 0;
+    this.progressNo = this.startDate.dayNo;
     this.dayNo = this.startDate.dayNo;
+    this.displayDay = this.startDate.dayNo;
+    this.updateHTML();
   }
 
   // nextDay(){
@@ -155,12 +160,100 @@ class LifeExtend15{
     // TODAYS DATE
     let todayClockElement;
     document.querySelector('#day_js').textContent = `${this.today.day} - ${this.progressNo}/${LifeExtend15.DAYS_IN_CYCLE}`;
-    document.querySelector('#date-today-day').textContent = this.today.day;
+    //document.querySelector('#date-today-day').textContent = this.today.day;
     document.querySelector('#date-today-date').textContent = this.today.HRdate;
     document.querySelector('#date-today-year').textContent = this.today.year;
-    
-
+    this.changeDayText('ct-meal-txt');
   }
+
+  changeDayText(targetDivId, day=null) {
+    if (day === null) { day = this.displayDay; }
+
+    let days = [
+        {
+            'day-title': 'SUNDAY',
+            'ml-cont-l': 'Cold or hot chicken or turkey, carrots, cooked cabbage, brocolli or cauliflower. Grapefruit of fruit in season. Tea or coffee w/o milk or sugar., or soda water.',
+            'ml-cont-d': 'Plenty of grilled steak, all visible fat removed before eating. Any cut of steak you wish – sirloin, fillet, rump etc. Salad of lettuce cucumber, celery, tomatoes, Brussel sprouts.',
+            'class': 'item day'
+        },
+        {
+            'day-title': 'MONDAY',
+            'ml-cont-l': 'Assorted cold cuts (your choice – lean meats, chicken, turkey, tongue, beef) Tomatoes – sliced, grilled or stewed. Tea or coffee w/o milk or sugar., or soda water.',
+            'ml-cont-d': 'Fish or shell fish, any kind. Combination salad, as many greens and veg as you wish, 1 slice wholemeal bread, toasted. Grapefruit. If not available, use fruits in season.',
+            'class': 'item day'
+        },
+        {
+            'day-title': 'TUESDAY',
+            'ml-cont-l': 'Fruit salad, any combination of fruits, as much as you want. Tea or coffee w/o milk or sugar.',
+            'ml-cont-d': 'Plenty of grilled lean hamburger. Tomatoes, lettuce, celery, olives, Brussel sprouts or cucumber. Tea or coffee w/o milk or sugar. (no more than 4 olives)',
+            'class': 'item day'
+        },
+        {
+            'day-title': 'WEDNESDAY',
+            'ml-cont-l': 'Tuna fish or salmon salad (oil drained off), with lemon/vinegar dressing. Grapefruit or melon. If not available, use fruits in season. Tea or coffee w/o milk or sugar.',
+            'ml-cont-d': 'Sliced roast lamb, all visible fat removed. Salad of lettuce, tomatoes, cucumber, celery. Tea or coffee w/o milk or sugar.',
+            'class': 'item day'
+        },
+        {
+            'day-title': 'THURSDAY',
+            'ml-cont-l': 'Two eggs any style (no fat used in cooking) Low fat cottage cheese, courgettes or string beans, or sliced or stewed tomatoes. 1 slice wholemeal bread, toasted. Tea or coffee w/o milk or sugar.',
+            'ml-cont-d': 'Roast, grilled or BBQ chicken, all you want (and visible fat removed before eating) Plenty of spinach, green peppers, string beans. Tea or coffee w/o milk or sugar.',
+            'class': 'item day'
+        },
+        {
+            'day-title': 'FRIDAY',
+            'ml-cont-l': 'Assorted cheese slices. Spinach all you want, 1 slice wholemeal bread toasted. Tea or coffee w/o milk or sugar.',
+            'ml-cont-d': 'Fish / shellfish. Combination salad and any and as much fresh vegetables as desired. Inc cold diced cooked vegetables if preferred. 1 slice wholemeal. Tea or coffee w/o milk or sugar.',
+            'class': 'item day'
+        },
+        {
+            'day-title': 'SATURDAY',
+            'ml-cont-l': 'Cold or hot chicken or turkey, carrots, cooked cabbage, brocolli or cauliflower. Grapefruit of fruit in season. Tea or coffee w/o milk or sugar., or soda water.',
+            'ml-cont-d': 'Roast poultry skin & fat removed after cooking. Tomatoes & lettuce prepared however you like without any fat or sugar. Fruit in season.',
+            'class': 'item day'
+        }        
+    ];
+
+    let targetDiv = document.getElementById(targetDivId);
+    targetDiv.replaceChildren();
+    let dayData = days[day];
+
+    let dayElement = document.createElement('div');
+    dayElement.id = `dy-content-${day}`;
+    dayElement.className = dayData['class'];
+    targetDiv.appendChild(dayElement);
+
+    let titleElement = document.createElement('div');
+    titleElement.className = "day-title";
+    titleElement.textContent = dayData['day-title'];
+    dayElement.appendChild(titleElement);
+
+    let contentElement = document.createElement('div');
+    contentElement.className = "day-time";
+    dayElement.appendChild(contentElement);
+
+    let lunchTitleElement = document.createElement('div');
+    lunchTitleElement.className = "meal-title-l";
+    lunchTitleElement.textContent = "Lunch";
+    contentElement.appendChild(lunchTitleElement);
+
+    let lunchContentElement = document.createElement('div');
+    lunchContentElement.className = "meal-content-l";
+    lunchContentElement.textContent = dayData['ml-cont-l'];
+    contentElement.appendChild(lunchContentElement);
+
+    contentElement.appendChild(document.createElement('br'));
+
+    let dinnerTitleElement = document.createElement('div');
+    dinnerTitleElement.className = "meal-title-d";
+    dinnerTitleElement.textContent = "Dinner";
+    contentElement.appendChild(dinnerTitleElement);
+
+    let dinnerContentElement = document.createElement('div');
+    dinnerContentElement.className = "meal-content-d";
+    dinnerContentElement.textContent = dayData['ml-cont-d'];
+    contentElement.appendChild(dinnerContentElement);
+  }  
 
 }
 
@@ -169,7 +262,7 @@ class LifeExtend15{
 // - - - - - - - - - - - - - - - - - - - - - - - - APP START- - - - - - - - - - - - - - - = = = <
 
 
-var hd = new LifeExtend15(new Date()); // check local storage and reconstitute if present.
+var hd = new LifeExtend15(new Date()); // TODO check local storage and reconstitute if present.
 var stateKey = '';
 //cl(hd);
 
@@ -185,45 +278,30 @@ if (KEY_LAST_KNOWN_STATE in localStorage) {  // retrieve current statekey, and 4
   localStorage.setItem(KEY_LAST_KNOWN_STATE, hd.localStorageKey);
 }
 
-// function addDebugLine(text) {
-//   return `<br>${text}`;
-// }
+function addDebugLine(text) {
+  return `<br>${text}`;
+}
 
-// function debugInfo(args) {
-//   let debugText = "* * * DEBUG INFO (beta release) * * * ";
-//   debugText += addDebugLine('');
-//   debugText += addDebugLine(`hellDiet V00.01 / SW 00.01`); // verion_number_passed_in
-//   debugText += addDebugLine('');
+function debugInfo(args) {
+  let debugText = "* * * DEBUG INFO (beta release) * * * ";
+  debugText += addDebugLine('');
+  debugText += addDebugLine(`hellDiet V.beta / SW xx.xx`); // verion_number_passed_in
+  debugText += addDebugLine('');
+  debugText += addDebugLine('-');
   
-//   // based on
-//   debugText += addDebugLine(`Based on year: ${settings.taxYear}`);
-//   debugText += addDebugLine('UK-ENGLAND');
-//   debugText += addDebugLine('-');
-//   debugText += addDebugLine('AL: Annual Leave');
-//   debugText += addDebugLine('-');
-//   debugText += addDebugLine(`TAX_RATE_2022/3: ${(settings.TAX_RATE_2022 * 100).toFixed(2)}%`);
-//   debugText += addDebugLine(`TAX_2022_ALLOWANCE: £${settings.TAX_2022_ALLOWANCE}`);
-//   debugText += addDebugLine(`NI_RATE_2022_23: ${(settings.NI_RATE_2022_23 * 100).toFixed(2)}%`);
-//   debugText += addDebugLine(`NI_2022_23_ALLOWANCE: £${settings.NI_2022_23_ALLOWANCE}`);
-//   debugText += addDebugLine(`HOURLY_RATE_2022: £${(settings.HOURLY_RATE_2022).toFixed(2)}`);
-//   debugText += addDebugLine(`HOURLY_RATE_2022_AL: £${settings.HOURLY_RATE_AL_2022}`);
-//   debugText += addDebugLine('(fixed:TODO update model)');
-//   debugText += addDebugLine(`PENSION_hd: ${(settings.PENSION_hd * 100).toFixed(2)}%`);
-//   debugText += addDebugLine('(fixed:TODO update model)');
-//   debugText += addDebugLine('-');
-  
-//   if (KEY_SW_INFO in localStorage) {
-//     swInfo = localStorage.getItem(KEY_SW_INFO);
+  if (KEY_SW_INFO in localStorage) {
+    swInfo = localStorage.getItem(KEY_SW_INFO);
     
-//     debugText += addDebugLine(`SW version: ${swInfo.swVersion}`);
-//     debugText += addDebugLine(`cache: ${swInfo.cacheName}`);
-//   } else {
-//     debugText += addDebugLine('** WARNING **');
-//     debugText += addDebugLine(`KEY: ${KEY_SW_INFO} < Not found.`);
-//   }
+    debugText += addDebugLine(`SW version: ${swInfo.swVersion}`);
+    debugText += addDebugLine(`cache: ${swInfo.cacheName}`);
+  } else {
+    debugText += addDebugLine('** WARNING **');
+    debugText += addDebugLine(`KEY: ${KEY_SW_INFO} < Not found.`);
+  }
   
-//   return debugText;
-// }
+  return debugText;
+}
+
 var theRules =`1. Don't drink any alcohol. (or your will power will fly out of the window!)
 2. Other drinks should not contain fat or sugar and minimal calories: tea, coffee, water, electrolyte drink.
 3. Don't use any fat in cooking.
@@ -239,6 +317,7 @@ function displayFlash(event, id, classSpecific, classShow, innerHTML='') {
   let targetBtn = event.target;
   let debugDiv = document.createElement('div');
   debugDiv.id = id;
+  debugDiv.style.caretColor = 'transparent';
   debugDiv.classList.add("flash", ...classSpecific); // add remove toggle
   //debugDiv.innerHTML = debugInfo();
   debugDiv.innerHTML = innerHTML;
@@ -270,14 +349,16 @@ window.addEventListener('load',function(){
     if (hd.progressDay < 0) hd.progressDay = 6;
     cl(`${Day.numToDay[hd.progressDay]} - ${hd.progressDay}`)
 
-    // todayClockElement = document.querySelector(`#${LifeExtend15.prefixes[dayNo % 7]}_out`).parentElement;
+    // TODO REMOVE
+    // todayClockElement = document.querySelector(`#${LifeExtend15.indexToDay[dayNo % 7]}_out`).parentElement;
+
     // LifeExtend15.highLightTodaysEntry(todayClockElement);      
-    let flashDayElement = document.querySelector('#sel_day_1');
+    let flashDayElement = document.querySelector('#sel-day-1');
     LifeExtend15.highLightTodaysEntry(flashDayElement);
 
     hd.persistentSave();
         
-    //hd = new LifeExtend15();  // create new payCycle object w/ LAST paydate & starting weekNo                                                  
+    //hd = new LifeExtend15();  // create new payCycle object w/ LAST paydate & starting weekNo TODO REMOVE
       
     if (hd.localStorageKey in localStorage) {     // populate new payCycle w/ stored payCycle if it exists
       let jsonObj = JSON.parse(localStorage.getItem(hd.localStorageKey));
@@ -319,10 +400,13 @@ window.addEventListener('load',function(){
   const ids = ['0', '1', '2', '3', '4', '5', '6', '99'];
 
   ids.forEach(id => {
-    document.querySelector(`#sel_day_${id}`).addEventListener('click', function(event) {
+    document.querySelector(`#sel-day-${id}`).addEventListener('click', function(event) {
+      console.log(`#sel-day-${id}: ${hd.updateToday().day} - ${event.target.getAttribute('value')}`);
+      console.log(event.target);
+      
+      hd.displayDay = event.target.getAttribute('value');
       hd.updateHTML();
-      hd.persistentSave();
-      console.log(`#sel_day_${id}: ${hd.updateToday().day}`);
+      hd.persistentSave();      
     });
   });
   
@@ -423,7 +507,7 @@ window.addEventListener('load',function(){
   if (document.querySelector('#debug_img')) {
     document.querySelector('#debug_img').addEventListener('click', function(event){  
       //displayFlash(event, id, classSpecific, classShow, innerHTML='')
-      displayFlash(event, 'flash_dbg', ['flash-dbg'], 'flash-dbg-show', debugInfo());
+      displayFlash(event, 'flash-dbg', ['flash-dbg'], 'flash-dbg-show', debugInfo());
     });
   }
 
@@ -431,7 +515,7 @@ window.addEventListener('load',function(){
     document.querySelector('#qr_but').addEventListener('click', function(event){  
       //displayFlash(event, id, classSpecific, classShow, innerHTML='')
       let img = '<img src="static/assets/images/hellDiet-QR-short.png">';
-      displayFlash(event, 'flash_QR', ['flash-qr'], 'flash-qr-show', img);
+      displayFlash(event, 'flash-QR', ['flash-qr'], 'flash-qr-show', img);
     });  
   }
 
@@ -442,7 +526,7 @@ window.addEventListener('load',function(){
       cl(' - - - -  htmlRules - - - S');
       cl(htmlRules);
       cl(' - - - -  htmlRules - - - E');
-      displayFlash(event, 'flash_QR', ['flash-qr'], 'flash-qr-show', htmlRules);
+      displayFlash(event, 'flash-Rules', ['flash-qr'], 'flash-qr-show', htmlRules);
     });  
   }
   

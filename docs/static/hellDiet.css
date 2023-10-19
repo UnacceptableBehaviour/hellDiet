@@ -104,6 +104,8 @@ body {
   padding: 1.5vw;
   margin-left: 0.1vw;
   margin-right: 0.1vw;
+  caret-color: transparent;
+  /* cursor: none; < mouse cursor! */
 }
 
 .font-portrait {
@@ -115,6 +117,11 @@ body {
 .title-text {
   font-size: 3.5vh;
   text-align: center;
+}
+
+.title-date-left {
+  margin-left: 0.7vw;
+  margin-right: 0.7vw;
 }
 
 #tax_code {
@@ -375,7 +382,7 @@ label.imgSelect input[accept*="image"] {
   text-align: right;
 }
 
-#ct_debug {
+#ct-debug {
   disply: none;
 }
 
