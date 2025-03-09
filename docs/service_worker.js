@@ -13,7 +13,7 @@
 
 const KEY_SW_INFO = 'sw_info';   // must match in hellDiet.js!
 
-let verion_number_passed_in = '00.02';  // < - - - - - - - - - - - - - - - - - - - - - - //
+let verion_number_passed_in = '00.03';  // < - - - - - - - - - - - - - - - - - - - - - - //
                                                                                           //
 const CACHE_NAME = `hellDiet-gitio-cache_${verion_number_passed_in}`;                     //
                                                                                           //
